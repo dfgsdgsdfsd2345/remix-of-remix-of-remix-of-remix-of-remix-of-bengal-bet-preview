@@ -200,7 +200,6 @@ export default function App() {
       } else if (noticeDue) {
         setIsNoticeOpen(true);
       }
-    }
     }, 700);
 
     return () => {
