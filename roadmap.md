@@ -1,5 +1,8 @@
 # Remaining work
 
+## 2026-11-03 14:30 remix connection
+- [ ] Replace DBSERVER_URL and NEEXT_MASTER_KEY through the secure form and verify server connectivity.
+
 ## 2026-11-03 complete bdt222 alignment audit
 - [x] First-pass saved13rules/source/live-config comparison recorded in docs/bdt222/ALIGNMENT_AUDIT_BN.md.
 - [x] Guest/member1920desktop and390mobile baseline, desktop menu presence/mobileVIP verified; test member removed.
