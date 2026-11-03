@@ -171,6 +171,7 @@ export interface VipTierConfig {
   targetBetDisplay?: string;
   depositTarget: number;
   upgradeBonus: number;
+  dailyBonus?: number;
   weeklyBonus: number;
   monthlyBonus: number;
   birthdayBonus?: number;

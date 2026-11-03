@@ -59,13 +59,13 @@ function bbPromoLiveRules(): array {
     require_once __DIR__.'/mystery_rules.php';
     $mystery = bbMysteryConfig();
     $rescue = Database::fetchAll("SELECT min_loss, percentage, max_bonus FROM rescue_tiers WHERE status='active' ORDER BY min_loss ASC");
-    $vip = Database::fetchAll("SELECT level, name, target_bet, deposit_target, upgrade_bonus, weekly_bonus, monthly_bonus, birthday_bonus FROM vip_tiers WHERE status='active' ORDER BY level ASC");
+    $vip = Database::fetchAll("SELECT level, name, target_bet, deposit_target, upgrade_bonus, daily_bonus, weekly_bonus, monthly_bonus, birthday_bonus FROM vip_tiers WHERE status='active' ORDER BY level ASC");
     $limits = Database::fetchOne('SELECT min_deposit, max_deposit, min_withdraw, max_withdraw FROM site_settings WHERE id=1') ?: [];
     return [
         'promoRules' => bbPromoRules(), 'depositOffer' => bbDepositOffer(), 'referral' => bbReferralSettings(),
         'chance' => $chance, 'mystery' => $mystery,
         'rescueTiers' => array_map(fn($r) => ['minLoss' => (float)$r['min_loss'], 'percentage' => (float)$r['percentage'], 'maxBonus' => (float)$r['max_bonus']], $rescue),
-        'vipTiers' => array_map(fn($r) => ['level' => (int)$r['level'], 'name' => $r['name'], 'targetBet' => (float)$r['target_bet'], 'depositTarget' => (float)$r['deposit_target'], 'upgradeBonus' => (float)$r['upgrade_bonus'], 'weeklyBonus' => (float)$r['weekly_bonus'], 'monthlyBonus' => (float)$r['monthly_bonus'], 'birthdayBonus' => (float)$r['birthday_bonus']], $vip),
+        'vipTiers' => array_map(fn($r) => ['level' => (int)$r['level'], 'name' => $r['name'], 'targetBet' => (float)$r['target_bet'], 'depositTarget' => (float)$r['deposit_target'], 'upgradeBonus' => (float)$r['upgrade_bonus'], 'dailyBonus' => (float)$r['daily_bonus'], 'weeklyBonus' => (float)$r['weekly_bonus'], 'monthlyBonus' => (float)$r['monthly_bonus'], 'birthdayBonus' => (float)$r['birthday_bonus']], $vip),
         'limits' => ['minDeposit' => (float)($limits['min_deposit'] ?? 200), 'maxDeposit' => (float)($limits['max_deposit'] ?? 50000), 'minWithdraw' => (float)($limits['min_withdraw'] ?? 500), 'maxWithdraw' => (float)($limits['max_withdraw'] ?? 100000)],
     ];
 }

@@ -1221,6 +1221,7 @@ export const api = {
             targetBetDisplay: t.targetBetDisplay ?? t.target_bet_display ?? '',
             depositTarget: Number(t.depositTarget ?? t.deposit_target ?? 0),
             upgradeBonus: Number(t.upgradeBonus ?? t.upgrade_bonus ?? 0),
+            dailyBonus: Number(t.dailyBonus ?? t.daily_bonus ?? 0),
             weeklyBonus: Number(t.weeklyBonus ?? t.weekly_bonus ?? 0),
             monthlyBonus: Number(t.monthlyBonus ?? t.monthly_bonus ?? 0),
             birthdayBonus: Number(t.birthdayBonus ?? t.birthday_bonus ?? 0),
