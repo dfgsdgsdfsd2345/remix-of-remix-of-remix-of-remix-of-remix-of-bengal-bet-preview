@@ -263,3 +263,4 @@ Current release blockers are not all external: remaining feature implementation 
 - [ ] bdt222 page structure in our theme (needs screenshots — site does not open in test browser)
 - [x] 2026-11-03 bdt222 match batch1: personal-center manual rebate tab, fake badges removed, bdt222 deposit preset amounts (limits remain server-driven)
 - [ ] bdt222 match next: VIP 35 bet-only tiers, withdraw 15/day, security score, points mall, red packet send, login popup order (need owner approval for server rule changes)
+- [x] Desktop+mobile full page/admin walk (2026-11-03)
