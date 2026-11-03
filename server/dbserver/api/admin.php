@@ -8,6 +8,15 @@ require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/reward_grants.php';
 require_once __DIR__ . '/turnover_math.php';
 require_once __DIR__.'/withdraw_activation.php';
+if (!function_exists('bbUniqueReferralCode')) {
+    function bbUniqueReferralCode(): string {
+        for ($i = 0; $i < 20; $i++) {
+            $code = 'BDT' . strtoupper(bin2hex(random_bytes(3)));
+            if (!Database::fetchOne('SELECT id FROM `users` WHERE `referral_code` = ? LIMIT 1', [$code])) return $code;
+        }
+        throw new RuntimeException('Could not allocate referral code');
+    }
+}
 
 Database::requireAdmin();
 $method = $_SERVER['REQUEST_METHOD'];
@@ -173,7 +182,7 @@ switch ($section) {
                 'red_packets_available' => 0,
                 'golden_eggs_available' => 0,
                 'unread_notifications' => 1,
-                'referral_code' => 'BDT' . strtoupper(substr(uniqid(), -4)),
+                'referral_code' => bbUniqueReferralCode(),
                 'total_earnings' => 0.00,
                 'referred_friends_count' => 0,
                 'avatar' => 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80',
@@ -252,7 +261,7 @@ switch ($section) {
 
             // Transaction log
             Database::insert('transactions', [
-                'id' => 'tx-' . uniqid(),
+                'id' => 'tx-' . bin2hex(random_bytes(12)),
                 'user_id' => $targetId,
                 'username' => $user['username'],
                 'user_phone' => $user['phone'],
@@ -351,7 +360,7 @@ switch ($section) {
             $username = $user ? $user['username'] : 'User';
             $phone = $user ? $user['phone'] : '';
 
-            $txId = 'tx-' . uniqid();
+            $txId = 'tx-' . bin2hex(random_bytes(12));
             $trxCode = trim($input['trxId'] ?? ('MAN' . date('YmdHis') . rand(100, 999)));
 
             Database::insert('transactions', [
@@ -630,7 +639,7 @@ switch ($section) {
                 Database::execute("UPDATE `users` SET `balance` = `balance` + ? WHERE `id` = ?", [$amount, $session['user_id']]);
                 
                 Database::insert('transactions', [
-                    'id' => 'tx-' . uniqid(),
+                    'id' => 'tx-' . bin2hex(random_bytes(12)),
                     'user_id' => $session['user_id'],
                     'type' => 'bonus',
                     'amount' => $amount,
@@ -690,7 +699,7 @@ switch ($section) {
             if (!$u) Database::errorResponse('User not found', 404);
             if(!bbHasLifetimeDeposit($uid))Database::errorResponse('বোনাস পেতে আগে একটি জমা অনুমোদিত হতে হবে।',400);
             Database::execute("UPDATE `users` SET `balance` = `balance` + ?, `total_earnings` = `total_earnings` + ? WHERE `id` = ?", [$amt, $amt, $uid]);
-            $tx = ['id' => 'tx-' . uniqid(), 'user_id' => $uid, 'username' => $u['username'], 'user_phone' => $u['phone'], 'type' => 'bonus', 'amount' => $amt, 'channel' => 'system', 'trx_id' => 'REF' . date('YmdHis') . rand(100,999), 'status' => 'success', 'description' => $input['note'] ?? 'রেফার বোনাস (অ্যাডমিন)', 'created_at' => date('Y-m-d H:i:s')];
+            $tx = ['id' => 'tx-' . bin2hex(random_bytes(12)), 'user_id' => $uid, 'username' => $u['username'], 'user_phone' => $u['phone'], 'type' => 'bonus', 'amount' => $amt, 'channel' => 'system', 'trx_id' => 'REF' . date('YmdHis') . rand(100,999), 'status' => 'success', 'description' => $input['note'] ?? 'রেফার বোনাস (অ্যাডমিন)', 'created_at' => date('Y-m-d H:i:s')];
             Database::insert('transactions', $tx);
             Database::jsonResponse(['success' => true, 'message' => "৳{$amt} রেফার বোনাস দেওয়া হয়েছে", 'newBalance' => (float)$u['balance'] + $amt, 'transaction' => $tx]);
         } elseif ($action === 'status') {
