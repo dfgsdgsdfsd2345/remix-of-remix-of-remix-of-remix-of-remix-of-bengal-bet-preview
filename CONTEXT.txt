@@ -161,3 +161,5 @@ R13. অ্যাডমিনের সব মেনু একটা ট্য�
 - 2026-11-03 13:55 UTC daily VIP salary: vip_tiers.daily_bonus column added (bdt222 values), vip_salary.php daily periods due 05:00 BD with period=previous day, promo_content/admin_reward_controls carry dailyBonus; uploaded with backup /tmp/vipbak and byte readback. Not yet observed a real daily card issued by cron.
 
 - 2026-11-03 14:00 UTC withdraw_guard: 15 requests/day cap under member lock (rejected excluded); uploaded + byte readback; not member-tested.
+
+- 2026-11-03 14:10 UTC App.tsx popup order changed to bdt222 (egg -> super value -> notice) via shouldOpenNoticeAfterChest; guest notice verified in browser; real member login not browser-verified.
