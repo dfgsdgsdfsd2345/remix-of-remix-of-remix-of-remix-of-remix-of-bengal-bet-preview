@@ -247,6 +247,7 @@ export const VipModal: React.FC<VipModalProps> = ({
                       <th className="p-2.5">লেভেল</th>
                       <th className="p-2.5">টার্গেট বাজি</th>
                       <th className="p-2.5">আপগ্রেড বোনাস</th>
+                      <th className="p-2.5">দৈনিক বেতন</th>
                       <th className="p-2.5">সাপ্তাহিক বেতন</th>
                       <th className="p-2.5">মাসিক বেতন</th>
                       <th className="p-2.5">রিবেট (Slot/Live)</th>
@@ -265,6 +266,7 @@ export const VipModal: React.FC<VipModalProps> = ({
                         </td>
                         <td className="p-2.5 font-mono">৳{t.targetBetDisplay || Number(t.targetBet ?? 0).toLocaleString()}</td>
                         <td className="p-2.5 text-emerald-300 font-mono font-bold">৳{Number(t.upgradeBonus ?? 0).toLocaleString()}</td>
+                        <td className="p-2.5 font-mono">৳{Number(t.dailyBonus ?? 0).toLocaleString()}</td>
                         <td className="p-2.5 font-mono">৳{Number(t.weeklyBonus ?? 0).toLocaleString()}</td>
                         <td className="p-2.5 font-mono">৳{Number(t.monthlyBonus ?? 0).toLocaleString()}</td>
                         <td className="p-2.5 text-yellow-300 font-mono">{t.slotRebate}% / {t.liveRebate}%</td>
