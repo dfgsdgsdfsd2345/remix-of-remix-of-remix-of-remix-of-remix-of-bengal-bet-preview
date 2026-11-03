@@ -1,5 +1,9 @@
 # Remaining work
 
+## 2026-11-03 live daily VIP verification
+- [x] Verify exact live salary source and VIP1 daily amount; isolated no-deposit/approved-deposit issuance, no cash on issuance, member UI redemption, repeat denial and ledger readback; clean all test data and temporary runner.
+- [ ] Previous-day VIP level is not snapshotted: current processing-time level determines card amount. Separate rule correction needed; automatic hosting cron remains unverified.
+
 ## 2026-11-03 referral, app and login-egg continuation
 - [x] Update the stale referral test to 49 tiers and run regressions (96 frontend tests).
 - [x] Verify isolated members below/at eligibility thresholds and duplicate claims on the live server; remove test records (fixtures, not full game/deposit UI).
