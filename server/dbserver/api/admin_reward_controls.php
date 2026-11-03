@@ -34,10 +34,11 @@ try {
   if($method==='DELETE'){Database::update('vip_tiers',['status'=>'inactive'],'level=?',[$level]);Database::jsonResponse(['success'=>true,'message'=>'Tier deactivated']);}
   if($method!=='POST')Database::errorResponse('Method Not Allowed',405);
   $row=['level'=>$level,'name'=>bbControlText($input,'name'),'badge_type'=>bbControlText($input,'badgeType',32),'target_bet_display'=>substr($input['targetBetDisplay'] ?? '',0,64),'description'=>substr($input['description'] ?? '',0,5000),'status'=>$input['status'] ?? 'active','perks_json'=>json_encode($input['perks'] ?? [],JSON_UNESCAPED_UNICODE)];
-  $existing=Database::fetchOne('SELECT birthday_bonus,perks_json FROM vip_tiers WHERE level=?',[$level]);
+  $existing=Database::fetchOne('SELECT birthday_bonus,daily_bonus,perks_json FROM vip_tiers WHERE level=?',[$level]);
   if(!array_key_exists('birthdayBonus',$input))$input['birthdayBonus']=$existing['birthday_bonus'] ?? 0;
+  if(!array_key_exists('dailyBonus',$input))$input['dailyBonus']=$existing['daily_bonus'] ?? 0;
   if(!array_key_exists('perks',$input))$row['perks_json']=$existing['perks_json'] ?? null;
-  foreach(['targetBet'=>'target_bet','depositTarget'=>'deposit_target','upgradeBonus'=>'upgrade_bonus','weeklyBonus'=>'weekly_bonus','monthlyBonus'=>'monthly_bonus','birthdayBonus'=>'birthday_bonus','slotRebate'=>'slot_rebate','liveRebate'=>'live_rebate'] as $key=>$column)$row[$column]=bbControlNumber($input,$key,in_array($key,['slotRebate','liveRebate'])?100:100000000);
+  foreach(['targetBet'=>'target_bet','depositTarget'=>'deposit_target','upgradeBonus'=>'upgrade_bonus','dailyBonus'=>'daily_bonus','weeklyBonus'=>'weekly_bonus','monthlyBonus'=>'monthly_bonus','birthdayBonus'=>'birthday_bonus','slotRebate'=>'slot_rebate','liveRebate'=>'live_rebate'] as $key=>$column)$row[$column]=bbControlNumber($input,$key,in_array($key,['slotRebate','liveRebate'])?100:100000000);
   if(!in_array($row['status'],['active','inactive'],true))throw new InvalidArgumentException('Invalid status');
   if(Database::fetchOne('SELECT level FROM vip_tiers WHERE level=?',[$level])){unset($row['level']);Database::update('vip_tiers',$row,'level=?',[$level]);}else Database::insert('vip_tiers',$row);
   Database::jsonResponse(['success'=>true,'message'=>'Tier saved','tier'=>bbRewardRow(Database::fetchOne('SELECT * FROM vip_tiers WHERE level=?',[$level]))]);
