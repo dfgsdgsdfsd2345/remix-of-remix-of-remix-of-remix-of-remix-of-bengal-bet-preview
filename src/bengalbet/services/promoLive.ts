@@ -99,7 +99,7 @@ function liveRulesRaw(iconType: string, live: LiveRules | null | undefined): str
       if (!c.enabled) return ['উদ্ধার তহবিল এখন বন্ধ।'];
       return [
         ...(live.rescueTiers || []).map((t) => `গতকালের লস ${tk(t.minLoss)}+ → ${pct(t.percentage)} (সর্বোচ্চ ${tk(t.maxBonus)})`),
-        `গেম: ${(c.categories || []).join(', ')}; পরদিন ${hh(c.claimDeadlineHour)} এর মধ্যে দাবি করুন।`,
+        c.claimFromHour === undefined ? `গেম: ${(c.categories || []).join(', ')}; পরদিন ${hh(c.claimDeadlineHour)} এর মধ্যে দাবি করুন।` : `গেম: ${(c.categories || []).join(', ')}; ${hh(c.claimFromHour)} থেকে ${c.claimWindowHours} ঘণ্টা দাবি করা যাবে।`,
       ];
     }
     case 'golden_egg': {
@@ -118,7 +118,7 @@ function liveRulesRaw(iconType: string, live: LiveRules | null | undefined): str
     case 'member_day': {
       const c = r.memberDay || {};
       if (!c.enabled) return ['সদস্য দিবস এখন বন্ধ।'];
-      return [`প্রতি মাসের ${c.day} তারিখে দাবি করুন।`, `১ থেকে ${c.day - 1} তারিখে ${tk(c.minBet)} বা বেশি বাজি করলে ${pct(c.ratePercent)} বোনাস, সর্বোচ্চ ${tk(c.maxBonus)}।`];
+      return [`প্রতি মাসের ${c.day} তারিখ ${hh(c.claimFromHour ?? 12)} থেকে দাবি করুন।`, `১ থেকে ${c.day - 1} তারিখে ${tk(c.minBet)} বা বেশি বাজি করলে ${pct(c.ratePercent)} বোনাস, সর্বোচ্চ ${tk(c.maxBonus)}।`];
     }
     case 'rebate': {
       const c = r.rebate || {};

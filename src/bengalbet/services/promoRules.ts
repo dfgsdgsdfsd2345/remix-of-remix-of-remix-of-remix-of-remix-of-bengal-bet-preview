@@ -5,12 +5,12 @@ export interface PromoRules {
   wheelTicketMinDeposit: number;
   wheelTicketsPerDay: number;
   redPacket: { enabled: boolean; hours: number[]; durationMinutes: number; perRoundLimit: number };
-  rescue: { enabled: boolean; claimDeadlineHour: number; categories: string[] };
+  rescue: { enabled: boolean; claimDeadlineHour: number; claimFromHour?: number; claimWindowHours?: number; categories: string[] };
   vip: { weeklyClaimDay: number; monthlyClaimDay: number; monthlyHour: number };
   appBonus: { enabled: boolean; amount: number };
   slotDaily: { enabled: boolean; minBet: number; ratePercent: number; maxBonus: number; claimFromHour: number; tiers?: { bet: number; bonus: number }[] };
   rebate: { enabled: boolean; ratePercent: number; tiers?: { bet: number; ratePercent: number }[] };
-  memberDay: { enabled: boolean; day: number; minBet: number; ratePercent: number; maxBonus: number };
+  memberDay: { enabled: boolean; day: number; claimFromHour?: number; minBet: number; ratePercent: number; maxBonus: number };
   withdrawal: { enabled: boolean; depositTurnover: number; depositBonusTurnover: number; otherBonusTurnover: number };
   missions: { enabled: boolean; category: string; tiers: { bet: number; bonus: number }[] };
   referralLevels: { enabled: boolean; tiers: { friends: number; bonus: number }[] };
@@ -26,13 +26,13 @@ export const PROMO_RULE_DEFAULTS: PromoRules = {
   depositEggsPerDay: 3,
   wheelTicketMinDeposit: 300,
   wheelTicketsPerDay: 1,
-  redPacket: { enabled: true, hours: [0, 12, 16, 20], durationMinutes: 30, perRoundLimit: 50 },
-  rescue: { enabled: true, claimDeadlineHour: 10, categories: ['slot', 'fishing'] },
+  redPacket: { enabled: true, hours: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22], durationMinutes: 30, perRoundLimit: 50 },
+  rescue: { enabled: true, claimDeadlineHour: 10, claimFromHour: 22, claimWindowHours: 24, categories: ['slot', 'fishing'] },
   vip: { weeklyClaimDay: 1, monthlyClaimDay: 1, monthlyHour: 15 },
   appBonus: { enabled: true, amount: 52 },
   slotDaily: { enabled: true, minBet: 1000, ratePercent: 0, maxBonus: 17777, claimFromHour: 9, tiers: SLOT_DAILY_TIERS },
   rebate: { enabled: true, ratePercent: 3, tiers: REBATE_TIERS },
-  memberDay: { enabled: true, day: 13, minBet: 1000, ratePercent: 1, maxBonus: 100000 },
+  memberDay: { enabled: true, day: 13, claimFromHour: 12, minBet: 1000, ratePercent: 1, maxBonus: 100000 },
   withdrawal: { enabled: true, depositTurnover: 1, depositBonusTurnover: 19, otherBonusTurnover: 1 },
   missions: { enabled: true, category: 'slot', tiers: [{ bet: 1000, bonus: 3 }, { bet: 3000, bonus: 8 }, { bet: 5000, bonus: 12 }, { bet: 10000, bonus: 18 }, { bet: 20000, bonus: 56 }, { bet: 50000, bonus: 128 }, { bet: 100000, bonus: 268 }, { bet: 200000, bonus: 588 }, { bet: 500000, bonus: 1288 }, { bet: 1000000, bonus: 2888 }, { bet: 2000000, bonus: 5888 }, { bet: 5000000, bonus: 12888 }, { bet: 10000000, bonus: 17777 }, { bet: 15000000, bonus: 22888 }, { bet: 20000000, bonus: 28888 }, { bet: 25000000, bonus: 35888 }, { bet: 30000000, bonus: 42888 }, { bet: 40000000, bonus: 55888 }, { bet: 50000000, bonus: 68888 }, { bet: 60000000, bonus: 82888 }, { bet: 70000000, bonus: 98888 }, { bet: 80000000, bonus: 118888 }, { bet: 90000000, bonus: 138888 }, { bet: 100000000, bonus: 168888 }, { bet: 150000000, bonus: 218888 }, { bet: 200000000, bonus: 300000 }] },
   referralLevels: { enabled: true, tiers: [{ friends: 10, bonus: 1500 }, { friends: 15, bonus: 1500 }, { friends: 20, bonus: 1500 }, { friends: 30, bonus: 3000 }, { friends: 40, bonus: 3000 }, { friends: 50, bonus: 3000 }, { friends: 60, bonus: 3000 }, { friends: 70, bonus: 3000 }, { friends: 80, bonus: 3000 }, { friends: 90, bonus: 3000 }, { friends: 100, bonus: 10000 }, { friends: 150, bonus: 15000 }, { friends: 200, bonus: 15000 }, { friends: 250, bonus: 15000 }, { friends: 300, bonus: 15000 }, { friends: 350, bonus: 15000 }, { friends: 400, bonus: 15000 }, { friends: 500, bonus: 15000 }, { friends: 600, bonus: 30000 }, { friends: 700, bonus: 30000 }, { friends: 800, bonus: 30000 }, { friends: 1000, bonus: 60000 }, { friends: 1500, bonus: 150000 }, { friends: 2000, bonus: 150000 }, { friends: 2500, bonus: 150000 }, { friends: 3000, bonus: 150000 }, { friends: 4000, bonus: 300000 }, { friends: 5000, bonus: 300000 }, { friends: 6000, bonus: 300000 }, { friends: 7000, bonus: 300000 }, { friends: 8000, bonus: 300000 }, { friends: 9000, bonus: 300000 }, { friends: 10000, bonus: 300000 }, { friends: 11000, bonus: 300000 }, { friends: 12000, bonus: 300000 }, { friends: 13000, bonus: 300000 }, { friends: 14000, bonus: 300000 }, { friends: 15000, bonus: 300000 }, { friends: 20000, bonus: 1500000 }, { friends: 25000, bonus: 1500000 }, { friends: 30000, bonus: 1500000 }, { friends: 35000, bonus: 1500000 }, { friends: 40000, bonus: 1500000 }, { friends: 50000, bonus: 3000000 }, { friends: 60000, bonus: 3000000 }, { friends: 70000, bonus: 3000000 }, { friends: 80000, bonus: 3000000 }, { friends: 90000, bonus: 3000000 }, { friends: 100000, bonus: 3000000 }] },
@@ -85,12 +85,12 @@ export function validatePromoRules(c: PromoRules): PromoRules {
     wheelTicketMinDeposit: int(c.wheelTicketMinDeposit, 0, 10000000),
     wheelTicketsPerDay: int(c.wheelTicketsPerDay, 0, 10),
     redPacket: { enabled: bool(c.redPacket.enabled), hours, durationMinutes: int(c.redPacket.durationMinutes, 1, 59), perRoundLimit: int(c.redPacket.perRoundLimit, 1, 100000) },
-    rescue: { enabled: bool(c.rescue.enabled), claimDeadlineHour: int(c.rescue.claimDeadlineHour, 1, 24), categories: [...new Set(c.rescue.categories)] },
+    rescue: { enabled: bool(c.rescue.enabled), claimDeadlineHour: int(c.rescue.claimDeadlineHour, 1, 24), ...(c.rescue.claimFromHour === undefined ? {} : { claimFromHour: int(c.rescue.claimFromHour, 0, 23), claimWindowHours: int(c.rescue.claimWindowHours ?? 24, 1, 24) }), categories: [...new Set(c.rescue.categories)] },
     vip: { weeklyClaimDay: int(c.vip.weeklyClaimDay, 1, 7), monthlyClaimDay: int(c.vip.monthlyClaimDay, 1, 28), monthlyHour: int(c.vip.monthlyHour ?? 15, 0, 23) },
     appBonus: { enabled: bool(c.appBonus.enabled), amount: Math.round(amount * 100) / 100 },
     slotDaily: { enabled: bool(c.slotDaily.enabled), minBet: num(c.slotDaily.minBet, 0, 1e8), ratePercent: num(c.slotDaily.ratePercent, 0, 100), maxBonus: num(c.slotDaily.maxBonus, 0, 1e8), claimFromHour: int(c.slotDaily.claimFromHour, 0, 23), tiers: c.slotDaily.tiers === undefined ? (PROMO_RULE_DEFAULTS.slotDaily.tiers ?? []) : (c.slotDaily.tiers.length ? tiers(c.slotDaily.tiers, 'bet', 1e10) : []) },
     rebate: { enabled: bool(c.rebate.enabled), ratePercent: num(c.rebate.ratePercent, 0, 3), tiers: rateTiers(c.rebate.tiers ?? REBATE_TIERS) },
-    memberDay: { enabled: bool(c.memberDay.enabled), day: int(c.memberDay.day, 2, 28), minBet: num(c.memberDay.minBet, 0, 1e8), ratePercent: num(c.memberDay.ratePercent, 0, 100), maxBonus: num(c.memberDay.maxBonus, 0, 1e8) },
+    memberDay: { enabled: bool(c.memberDay.enabled), day: int(c.memberDay.day, 2, 28), claimFromHour: int(c.memberDay.claimFromHour ?? 12, 0, 23), minBet: num(c.memberDay.minBet, 0, 1e8), ratePercent: num(c.memberDay.ratePercent, 0, 100), maxBonus: num(c.memberDay.maxBonus, 0, 1e8) },
     withdrawal: { enabled: bool(c.withdrawal.enabled), depositTurnover: num(c.withdrawal.depositTurnover, 0, 50), depositBonusTurnover: num(c.withdrawal.depositBonusTurnover, 0, 50), otherBonusTurnover: num(c.withdrawal.depositTurnover, 0, 50) },
     missions: (() => { const m = c.missions ?? PROMO_RULE_DEFAULTS.missions; if (!['all', ...GAME_CATEGORIES].includes(m.category)) throw new Error('মিশনের গেম ধরন সঠিক নয়।'); return { enabled: bool(m.enabled), category: m.category, tiers: tiers(m.tiers, 'bet', 1e10) }; })(),
     referralLevels: (() => { const m = c.referralLevels ?? PROMO_RULE_DEFAULTS.referralLevels; return { enabled: bool(m.enabled), tiers: tiers(m.tiers, 'friends', 100000) }; })(),

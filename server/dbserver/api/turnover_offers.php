@@ -42,7 +42,7 @@ function bbOfferState(string $uid, string $offer): array {
         $t = (float)Database::fetchOne('SELECT COALESCE(SUM(valid_bet),0) AS t FROM bets WHERE user_id=? AND date BETWEEN ? AND ?', [$uid, $from, $to])['t'];
         $bonus = bbTurnoverBonus($t, (float)$c['minBet'], (float)$c['ratePercent'], (float)$c['maxBonus']);
         $claimed = (bool)Database::fetchOne('SELECT 1 AS x FROM reward_grants WHERE user_id=? AND grant_key=?', [$uid, 'member_day:' . $month]);
-        $open = !empty($c['enabled']) && (int)date('j', $now) === $day;
+        $open = bbMemberDayOpen($c, $now);
         return ['offer' => $offer, 'turnover' => $t, 'bonus' => $bonus, 'claimed' => $claimed, 'open' => $open, 'eligible' => $open && !$claimed && $bonus > 0, 'key' => 'member_day:' . $month, 'day' => $day, 'label' => 'সদস্য দিবস'];
     }
     throw new RuntimeException('Unknown offer');

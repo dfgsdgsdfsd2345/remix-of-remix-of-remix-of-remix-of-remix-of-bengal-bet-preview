@@ -65,8 +65,8 @@ try {
   // Plan: yesterday's slot/fishing loss, claimable the next day until 10:00 (Bangladesh time)
   $rr=bbPromoRules()['rescue'];
   if(empty($rr['enabled'])) throw new RuntimeException('উদ্ধার তহবিল এখন বন্ধ।');
-  $date=date('Y-m-d',strtotime('-1 day'));
-  if((int)date('G')>=(int)$rr['claimDeadlineHour']) throw new RuntimeException('উদ্ধার তহবিল প্রতিদিন '.(int)$rr['claimDeadlineHour'].':00 এর মধ্যে দাবি করতে হয়।');
+  $window=bbRescueWindow($rr,time()); $date=$window['date'];
+  if(!$window['open']) throw new RuntimeException('উদ্ধার তহবিলের দাবি করার সময় শেষ হয়েছে।');
   $catIn=implode(',',array_fill(0,count($rr['categories']),'?'));
   if(Database::fetchOne('SELECT id FROM rescue_claims WHERE user_id=? AND date=?',[$userId,$date])) throw new RuntimeException('গতকালের উদ্ধার তহবিল ইতিমধ্যে দাবি করেছেন।');
   $sum=Database::fetchOne("SELECT COALESCE(SUM(bet_amount),0) AS bet,COALESCE(SUM(reward),0) AS win FROM bets WHERE user_id=? AND date=? AND category IN ($catIn)",array_merge([$userId,$date],$rr['categories']));

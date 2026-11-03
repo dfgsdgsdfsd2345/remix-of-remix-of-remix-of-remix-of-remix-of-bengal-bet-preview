@@ -11,13 +11,13 @@ function bbPromoRulesDefaults(): array {
         'depositEggsPerDay' => 3,
         'wheelTicketMinDeposit' => 300,
         'wheelTicketsPerDay' => 1,
-        'redPacket' => ['enabled' => true, 'hours' => [0, 12, 16, 20], 'durationMinutes' => 30, 'perRoundLimit' => 50],
-        'rescue' => ['enabled' => true, 'claimDeadlineHour' => 10, 'categories' => ['slot', 'fishing']],
+        'redPacket' => ['enabled' => true, 'hours' => [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22], 'durationMinutes' => 30, 'perRoundLimit' => 50],
+        'rescue' => ['enabled' => true, 'claimDeadlineHour' => 10, 'claimFromHour' => 22, 'claimWindowHours' => 24, 'categories' => ['slot', 'fishing']],
         'vip' => ['weeklyClaimDay' => 1, 'monthlyClaimDay' => 1, 'monthlyHour' => 15],
         'appBonus' => ['enabled' => true, 'amount' => 52],
         'slotDaily' => ['enabled' => true, 'minBet' => 1000, 'ratePercent' => 0, 'maxBonus' => 17777, 'claimFromHour' => 9, 'tiers' => bbSlotDailyTierDefaults()],
         'rebate' => ['enabled' => true, 'ratePercent' => 3, 'tiers' => [['bet' => 1, 'ratePercent' => 0.3], ['bet' => 1000000, 'ratePercent' => 0.6], ['bet' => 10000000, 'ratePercent' => 1.5], ['bet' => 50000000, 'ratePercent' => 3]]],
-        'memberDay' => ['enabled' => true, 'day' => 13, 'minBet' => 1000, 'ratePercent' => 1, 'maxBonus' => 100000],
+        'memberDay' => ['enabled' => true, 'day' => 13, 'claimFromHour' => 12, 'minBet' => 1000, 'ratePercent' => 1, 'maxBonus' => 100000],
         'withdrawal' => ['enabled' => true, 'depositTurnover' => 1, 'depositBonusTurnover' => 19, 'otherBonusTurnover' => 1],
         'missions' => ['enabled' => true, 'category' => 'slot', 'tiers' => [['bet' => 1000, 'bonus' => 3], ['bet' => 3000, 'bonus' => 8], ['bet' => 5000, 'bonus' => 12], ['bet' => 10000, 'bonus' => 18], ['bet' => 20000, 'bonus' => 56], ['bet' => 50000, 'bonus' => 128], ['bet' => 100000, 'bonus' => 268], ['bet' => 200000, 'bonus' => 588], ['bet' => 500000, 'bonus' => 1288], ['bet' => 1000000, 'bonus' => 2888], ['bet' => 2000000, 'bonus' => 5888], ['bet' => 5000000, 'bonus' => 12888], ['bet' => 10000000, 'bonus' => 17777], ['bet' => 15000000, 'bonus' => 22888], ['bet' => 20000000, 'bonus' => 28888], ['bet' => 25000000, 'bonus' => 35888], ['bet' => 30000000, 'bonus' => 42888], ['bet' => 40000000, 'bonus' => 55888], ['bet' => 50000000, 'bonus' => 68888], ['bet' => 60000000, 'bonus' => 82888], ['bet' => 70000000, 'bonus' => 98888], ['bet' => 80000000, 'bonus' => 118888], ['bet' => 90000000, 'bonus' => 138888], ['bet' => 100000000, 'bonus' => 168888], ['bet' => 150000000, 'bonus' => 218888], ['bet' => 200000000, 'bonus' => 300000]]],
         'referralLevels' => ['enabled' => true, 'tiers' => [['friends' => 10, 'bonus' => 1500], ['friends' => 15, 'bonus' => 1500], ['friends' => 20, 'bonus' => 1500], ['friends' => 30, 'bonus' => 3000], ['friends' => 40, 'bonus' => 3000], ['friends' => 50, 'bonus' => 3000], ['friends' => 60, 'bonus' => 3000], ['friends' => 70, 'bonus' => 3000], ['friends' => 80, 'bonus' => 3000], ['friends' => 90, 'bonus' => 3000], ['friends' => 100, 'bonus' => 10000], ['friends' => 150, 'bonus' => 15000], ['friends' => 200, 'bonus' => 15000], ['friends' => 250, 'bonus' => 15000], ['friends' => 300, 'bonus' => 15000], ['friends' => 350, 'bonus' => 15000], ['friends' => 400, 'bonus' => 15000], ['friends' => 500, 'bonus' => 15000], ['friends' => 600, 'bonus' => 30000], ['friends' => 700, 'bonus' => 30000], ['friends' => 800, 'bonus' => 30000], ['friends' => 1000, 'bonus' => 60000], ['friends' => 1500, 'bonus' => 150000], ['friends' => 2000, 'bonus' => 150000], ['friends' => 2500, 'bonus' => 150000], ['friends' => 3000, 'bonus' => 150000], ['friends' => 4000, 'bonus' => 300000], ['friends' => 5000, 'bonus' => 300000], ['friends' => 6000, 'bonus' => 300000], ['friends' => 7000, 'bonus' => 300000], ['friends' => 8000, 'bonus' => 300000], ['friends' => 9000, 'bonus' => 300000], ['friends' => 10000, 'bonus' => 300000], ['friends' => 11000, 'bonus' => 300000], ['friends' => 12000, 'bonus' => 300000], ['friends' => 13000, 'bonus' => 300000], ['friends' => 14000, 'bonus' => 300000], ['friends' => 15000, 'bonus' => 300000], ['friends' => 20000, 'bonus' => 1500000], ['friends' => 25000, 'bonus' => 1500000], ['friends' => 30000, 'bonus' => 1500000], ['friends' => 35000, 'bonus' => 1500000], ['friends' => 40000, 'bonus' => 1500000], ['friends' => 50000, 'bonus' => 3000000], ['friends' => 60000, 'bonus' => 3000000], ['friends' => 70000, 'bonus' => 3000000], ['friends' => 80000, 'bonus' => 3000000], ['friends' => 90000, 'bonus' => 3000000], ['friends' => 100000, 'bonus' => 3000000]]],
@@ -96,6 +96,7 @@ function bbValidatePromoRules($c): array {
         'rescue' => [
             'enabled' => bbPromoBool($c['rescue']['enabled'] ?? null, 'rescue.enabled'),
             'claimDeadlineHour' => bbPromoInt($c['rescue']['claimDeadlineHour'] ?? null, 1, 24, 'rescue.claimDeadlineHour'),
+            ...(isset($c['rescue']['claimFromHour']) ? ['claimFromHour'=>bbPromoInt($c['rescue']['claimFromHour'],0,23,'rescue.claimFromHour'), 'claimWindowHours'=>bbPromoInt($c['rescue']['claimWindowHours']??24,1,24,'rescue.claimWindowHours')] : []),
             'categories' => $cs,
         ],
         'vip' => [
@@ -120,6 +121,7 @@ function bbValidatePromoRules($c): array {
         'memberDay' => [
             'enabled' => bbPromoBool($c['memberDay']['enabled'] ?? null, 'memberDay.enabled'),
             'day' => bbPromoInt($c['memberDay']['day'] ?? null, 2, 28, 'memberDay.day'),
+            'claimFromHour' => bbPromoInt($c['memberDay']['claimFromHour'] ?? 12,0,23,'memberDay.claimFromHour'),
             'minBet' => bbPromoNum($c['memberDay']['minBet'] ?? null, 0, 100000000, 'memberDay.minBet'),
             'ratePercent' => bbPromoNum($c['memberDay']['ratePercent'] ?? null, 0, 100, 'memberDay.ratePercent'),
             'maxBonus' => bbPromoNum($c['memberDay']['maxBonus'] ?? null, 0, 100000000, 'memberDay.maxBonus'),
@@ -140,6 +142,22 @@ function bbValidatePromoRules($c): array {
             'tiers' => bbPromoTiers($c['referralLevels']['tiers'] ?? null, 'friends', 'referralLevels.tiers', 100000),
         ],
     ];
+}
+function bbMemberDayOpen(array $c, int $timestamp): bool {
+    $now=(new DateTimeImmutable('@'.$timestamp))->setTimezone(new DateTimeZone('Asia/Dhaka'));
+    return !empty($c['enabled']) && (int)$now->format('j')===(int)$c['day'] && (int)$now->format('G')>=(int)($c['claimFromHour']??12);
+}
+/** Last opened daily window; loss is from the completed day before its opening date. */
+function bbRescueWindow(array $c, int $timestamp): array {
+    $now=(new DateTimeImmutable('@'.$timestamp))->setTimezone(new DateTimeZone('Asia/Dhaka'));
+    if (!isset($c['claimFromHour'])) {
+        $end=$now->setTime(0,0)->modify('+'.(int)$c['claimDeadlineHour'].' hours');
+        return ['date'=>$now->modify('-1 day')->format('Y-m-d'),'opensAt'=>$now->setTime(0,0)->format('Y-m-d H:i:s'),'expiresAt'=>$end->format('Y-m-d H:i:s'),'open'=>!empty($c['enabled']) && $now<$end];
+    }
+    $start=$now->setTime((int)$c['claimFromHour'],0);
+    if ($now<$start) $start=$start->modify('-1 day');
+    $end=$start->modify('+'.(int)($c['claimWindowHours']??24).' hours');
+    return ['date'=>$start->modify('-1 day')->format('Y-m-d'),'opensAt'=>$start->format('Y-m-d H:i:s'),'expiresAt'=>$end->format('Y-m-d H:i:s'),'open'=>!empty($c['enabled']) && $now>=$start && $now<$end];
 }
 function bbPromoRules(): array {
     static $cache = null; if ($cache !== null) return $cache;
