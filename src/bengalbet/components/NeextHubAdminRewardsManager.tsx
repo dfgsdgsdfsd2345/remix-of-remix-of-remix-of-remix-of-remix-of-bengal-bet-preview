@@ -502,6 +502,7 @@ export const NeextHubAdminRewardsManager: React.FC<NeextHubAdminRewardsManagerPr
   const [cfgMaxBonus, setCfgMaxBonus] = useState(50000);
   const [cfgTriggerDay, setCfgTriggerDay] = useState(23);
   const [cfgTriggerHour, setCfgTriggerHour] = useState(18);
+  const [cfgExpiryDays, setCfgExpiryDays] = useState(30);
   const [cfgMinBet, setCfgMinBet] = useState(500);
   const [cfgPromoCode, setCfgPromoCode] = useState('BENGALBETVIP');
   const [cfgTurnover, setCfgTurnover] = useState(1);
@@ -528,6 +529,7 @@ export const NeextHubAdminRewardsManager: React.FC<NeextHubAdminRewardsManagerPr
         setCfgMaxBonus(cfgRes.config.maxBonusAmount);
         setCfgTriggerDay(cfgRes.config.triggerDayOfMonth);
         setCfgTriggerHour(cfgRes.config.triggerHour);
+        setCfgExpiryDays(cfgRes.config.claimExpiryDays ?? 30);
         setCfgMinBet(cfgRes.config.minBetRequired);
         setCfgPromoCode(cfgRes.config.promoCode);
         setCfgTurnover(cfgRes.config.wageringTurnover);
@@ -556,7 +558,7 @@ export const NeextHubAdminRewardsManager: React.FC<NeextHubAdminRewardsManagerPr
         minBonusAmount: Number(cfgMinBonus),
         maxBonusAmount: Number(cfgMaxBonus),
         triggerDayOfMonth: Number(cfgTriggerDay),
-        triggerHour: Number(cfgTriggerHour),
+        triggerHour: Number(cfgTriggerHour), claimExpiryDays: Number(cfgExpiryDays),
         minBetRequired: Number(cfgMinBet),
         promoCode: cfgPromoCode.trim().toUpperCase(),
         wageringTurnover: Number(cfgTurnover),
@@ -565,7 +567,7 @@ export const NeextHubAdminRewardsManager: React.FC<NeextHubAdminRewardsManagerPr
       if (!res.success) throw new Error('রহস্য নিয়ম সংরক্ষণ হয়নি।');
       if (res.success) {
         const readback = await api.mysteryReward.getAdminConfig();
-        const expected = { enabled: cfgEnabled, minBonusAmount: Number(cfgMinBonus), maxBonusAmount: Number(cfgMaxBonus), triggerDayOfMonth: Number(cfgTriggerDay), triggerHour: Number(cfgTriggerHour), minBetRequired: Number(cfgMinBet), promoCode: cfgPromoCode.trim().toUpperCase() };
+        const expected = { enabled: cfgEnabled, minBonusAmount: Number(cfgMinBonus), maxBonusAmount: Number(cfgMaxBonus), triggerDayOfMonth: Number(cfgTriggerDay), triggerHour: Number(cfgTriggerHour), claimExpiryDays: Number(cfgExpiryDays), minBetRequired: Number(cfgMinBet), promoCode: cfgPromoCode.trim().toUpperCase() };
         if (!readback.success || Object.entries(expected).some(([key, value]) => readback.config?.[key] !== value)) throw new Error('সংরক্ষিত রহস্য নিয়ম মেলেনি। আবার পরীক্ষা করুন।');
         if (readback.config?.autoCreditEnabled !== false) throw new Error('নগদ কার্ডের নিয়ম যাচাই হয়নি।');
         setCfgTurnover(readback.config.wageringTurnover);
@@ -1784,6 +1786,7 @@ export const NeextHubAdminRewardsManager: React.FC<NeextHubAdminRewardsManagerPr
                   </div>
                 </div>
 
+                <label className="block text-sm text-foreground">রহস্য কার্ডের মেয়াদ (দিন)<input aria-label="রহস্য কার্ডের মেয়াদ" type="number" min={1} max={365} value={cfgExpiryDays} onChange={e => setCfgExpiryDays(Number(e.target.value))} className="w-full rounded-md border border-input bg-background p-2" /></label>
                 <div className="flex items-center justify-end gap-2 pt-3 border-t border-emerald-800/40">
                   <button
                     type="button"

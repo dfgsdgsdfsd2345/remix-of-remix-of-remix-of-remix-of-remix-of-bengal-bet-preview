@@ -30,6 +30,11 @@ function bbDailyLoginEgg(string $uid): bool {
     Database::execute('UPDATE users SET golden_eggs_available = golden_eggs_available + ? WHERE id = ?', [$n, $uid]);
     return true;
 }
+/** Counter is usable only when its grant day is explicitly recorded. */
+function bbWheelAvailable(string $uid, int $counter): int {
+    $row=Database::fetchOne('SELECT ticket_day FROM wheel_ticket_days WHERE user_id=?',[$uid]);
+    return $row && $row['ticket_day']===date('Y-m-d') ? max(0,$counter) : 0;
+}
 function bbDepositGrants(string $uid, float $amount): void {
     $day = date('Y-m-d'); $r = bbPromoRules();
     for ($i = 1; $i <= (int)$r['depositEggsPerDay']; $i++) {
@@ -37,7 +42,12 @@ function bbDepositGrants(string $uid, float $amount): void {
     }
     if ($amount >= (float)$r['wheelTicketMinDeposit']) {
         for ($i = 1; $i <= (int)$r['wheelTicketsPerDay']; $i++) {
-            if (bbGrantOnce($uid, "deposit_spin:$day:$i")) { Database::execute('UPDATE users SET free_spins = free_spins + 1 WHERE id = ?', [$uid]); break; }
+            if (bbGrantOnce($uid, "deposit_spin:$day:$i")) {
+                $old=Database::fetchOne('SELECT free_spins FROM users WHERE id=?',[$uid]);
+                $available=bbWheelAvailable($uid,(int)($old['free_spins']??0));
+                Database::execute('UPDATE users SET free_spins=? WHERE id=?',[$available+1,$uid]);
+                Database::execute('INSERT INTO wheel_ticket_days (user_id,ticket_day) VALUES (?,?) ON DUPLICATE KEY UPDATE ticket_day=VALUES(ticket_day)',[$uid,$day]); break;
+            }
         }
     }
 }

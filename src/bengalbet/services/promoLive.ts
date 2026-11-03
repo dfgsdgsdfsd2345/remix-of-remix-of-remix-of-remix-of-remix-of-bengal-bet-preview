@@ -60,7 +60,7 @@ function liveRulesRaw(iconType: string, live: LiveRules | null | undefined): str
         'আপনার নিজের অন্তত একটি জমা অনুমোদিত না হলে কোনো রেফার বোনাস বা কমিশন পাবেন না।',
         `বন্ধু ${tk(s.minDepositToQualify)} জমা ও ${tk(s.minBetTurnoverToQualify)} বাজি করলে আপনি ${tk(s.instantBonusPerFriend)} পাবেন (প্রতি বন্ধু একবার)।`,
         `বন্ধুর প্রতিটি অনুমোদিত জমায় ${pct(s.depositRebateRate)} কমিশন।`,
-        `বন্ধুর প্রতিটি বাজিতে ${pct(s.betTurnoverRebateRate)} কমিশন সাথে সাথে।`,
+        `যোগ্য বন্ধুর স্লট/ফিশিং বৈধ বাজিতে ${pct(s.betTurnoverRebateRate)} কমিশন।`,
       ];
     }
     case 'mystery': {
@@ -69,6 +69,7 @@ function liveRulesRaw(iconType: string, live: LiveRules | null | undefined): str
       return [
         `মাসের শুরু থেকে ${m.triggerDayOfMonth} তারিখ শুরু হওয়ার আগের মোট ${tk(m.minBetRequired)} বাজি করলে যোগ্য।`,
         `প্রতি মাসের ${m.triggerDayOfMonth} তারিখ ${hh(m.triggerHour)}-এ ${tk(m.minBonusAmount)}–${tk(m.maxBonusAmount)} নগদ কার্ড পুরস্কারের টিকিটে আসে; গ্রহণ করলে টাকা যোগ হয়।`,
+        `কার্ড তৈরির পর ${m.claimExpiryDays ?? 30} দিনের মধ্যে গ্রহণ করুন।`,
         wager(r.withdrawal?.otherBonusTurnover ?? 1),
         'বোনাস পেতে আগে একটি জমা অনুমোদিত হতে হবে। শেষ জমার এক মাস পর উত্তোলন বন্ধ হলে ব্লকের সময়ের ব্যালেন্সের সমান মোট নতুন জমা প্রয়োজন।',
       ];
@@ -113,7 +114,7 @@ function liveRulesRaw(iconType: string, live: LiveRules | null | undefined): str
     }
     case 'iphone': {
       const ch = live.chance?.spin;
-      return [`দিনে ${tk(r.wheelTicketMinDeposit)} বা বেশি অনুমোদিত জমায় ${r.wheelTicketsPerDay}টি হুইল টিকিট।`, ch?.count ? `হুইলের পুরস্কার ${tk(ch.min)}–${tk(ch.max)}।` : 'পুরস্কার তালিকা এখনো ঠিক হয়নি।'];
+      return [`দিনে ${tk(r.wheelTicketMinDeposit)} বা বেশি অনুমোদিত জমায় ${r.wheelTicketsPerDay}টি হুইল টিকিট; সেই দিনের শেষে মেয়াদ শেষ।`, ch?.count ? `হুইলের পুরস্কার ${tk(ch.min)}–${tk(ch.max)}।` : 'পুরস্কার তালিকা এখনো ঠিক হয়নি।'];
     }
     case 'member_day': {
       const c = r.memberDay || {};

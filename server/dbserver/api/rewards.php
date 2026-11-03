@@ -112,6 +112,7 @@ try {
         if (!bbGrantOnce($userId, 'packet:' . $round)) throw new RuntimeException('এই রাউন্ডের রেড প্যাকেট আপনি ইতিমধ্যে নিয়েছেন।');
         Database::execute('UPDATE users SET balance=balance+? WHERE id=?', [$amount, $userId]);
     } else {
+        if ($type==='spin') $user[$col]=bbWheelAvailable($userId,(int)$user[$col]);
         if ((int)$user[$col] <= 0) throw new RuntimeException('আপনার কোনো সুযোগ বাকি নেই।');
         Database::execute("UPDATE users SET `$col`=`$col`-1, balance=balance+? WHERE id=?", [$amount, $userId]);
     }
@@ -127,5 +128,6 @@ try {
     Database::errorResponse($e instanceof RuntimeException && !($e instanceof PDOException) ? $e->getMessage() : 'Reward could not be processed', 400);
 }
 $u = Database::fetchOne('SELECT * FROM users WHERE id=?', [$userId]);
+$u['free_spins']=bbWheelAvailable($userId,(int)$u['free_spins']);
 unset($u['password_hash'], $u['transaction_password']);
 Database::jsonResponse(['success' => true, 'prize' => ['index' => $index, 'label' => $label, 'amount' => $amount], 'newBalance' => (float)$u['balance'], 'user' => $u]);
