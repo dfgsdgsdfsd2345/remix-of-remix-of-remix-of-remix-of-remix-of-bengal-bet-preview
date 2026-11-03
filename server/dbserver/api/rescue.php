@@ -121,7 +121,7 @@ switch ($action) {
 
         // Transaction record
         Database::insert('transactions', [
-            'id' => 'tx-' . uniqid(),
+            'id' => 'tx-' . bin2hex(random_bytes(12)),
             'user_id' => $userId,
             'type' => 'bonus',
             'amount' => $bonus,

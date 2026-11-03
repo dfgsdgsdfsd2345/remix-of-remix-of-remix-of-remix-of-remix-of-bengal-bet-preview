@@ -52,7 +52,7 @@ switch ($action) {
             $prior = Database::fetchOne("SELECT COUNT(*) AS c FROM `transactions` WHERE `user_id` = ? AND `type` = 'deposit' AND `status` IN ('pending','success')", [$userId]);
             $offer = bbDepositOffer();
             $bonus = bbDepositBonus($offer, $amount, $optIn, (int)($prior['c'] ?? 0) > 0);
-            $txId = 'tx-' . uniqid();
+            $txId = 'tx-' . bin2hex(random_bytes(12));
             $txData = [
                 'id' => $txId,
                 'user_id' => $userId,
@@ -108,7 +108,7 @@ switch ($action) {
         $trxId = 'WD' . date('YmdHis') . rand(100, 999);
 
         // Insert transaction record (marked as pending/processing for security, balance deducted)
-        $txId = 'tx-' . uniqid();
+        $txId = 'tx-' . bin2hex(random_bytes(12));
         $txData = [
             'id' => $txId,
             'user_id' => $userId,
