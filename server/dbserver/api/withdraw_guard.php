@@ -24,6 +24,9 @@ $pdo=Database::getConnection();try {
     if($turnover['remaining']>0)throw new RuntimeException('উত্তোলনের আগে আরও ৳'.number_format($turnover['remaining'],2).' বাজি সম্পন্ন করতে হবে।');
     if((float)$user['balance']<$amount)throw new RuntimeException('Insufficient balance');
     if(Database::fetchOne("SELECT id FROM transactions WHERE user_id=? AND type='withdraw' AND status='pending'",[$userId]))throw new RuntimeException('A withdrawal is already pending');
+    // bdt222 rule: at most 15 withdrawal requests per Bangladesh day (server clock); rejected ones do not count.
+    $todayCount=(int)Database::fetchOne("SELECT COUNT(*) c FROM transactions WHERE user_id=? AND type='withdraw' AND status IN ('pending','success') AND created_at>=? AND created_at<?",[$userId,date('Y-m-d 00:00:00'),date('Y-m-d 00:00:00',strtotime('+1 day'))])['c'];
+    if($todayCount>=15)throw new RuntimeException('আজ সর্বোচ্চ ১৫ বার উত্তোলন করা হয়ে গেছে। আগামীকাল আবার চেষ্টা করুন।');
     $id='tx-'.bin2hex(random_bytes(12));$row=['id'=>$id,'user_id'=>$userId,'username'=>$user['username'],'user_phone'=>$user['phone'],'type'=>'withdraw','amount'=>$amount,'bonus'=>0,'fee'=>0,'channel'=>$type,'account_number'=>$account,'trx_id'=>'WD-'.bin2hex(random_bytes(12)),'status'=>'pending','description'=>'Wallet withdrawal pending approval','created_at'=>date('Y-m-d H:i:s')];
     Database::insert('transactions',$row);Database::execute('UPDATE users SET balance=balance-? WHERE id=?',[$amount,$userId]);
     $balance=Database::fetchOne('SELECT balance FROM users WHERE id=?',[$userId]);$pdo->commit();
