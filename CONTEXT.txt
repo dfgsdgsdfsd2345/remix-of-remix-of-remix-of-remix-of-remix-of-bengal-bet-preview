@@ -153,3 +153,5 @@ R13. অ্যাডমিনের সব মেনু একটা ট্য�
 [2026-11-03 11:40 UTC] bdt222 live crawl (anti-devtools bypass, mobile), registered member 01644324212 (password given to user), 37 page captures + 13 promo rule texts saved docs/bdt222; audit mismatches listed in TASKLIST #২৫.
 [2026-11-03 12:10] bdt222 re-captured desktop/mobile pre-login (docs/bdt222/v2); desktop post-login blocked by golden-egg popup + phone verification on repeated logins; plan in docs/bdt222/REDEVELOPMENT_PLAN_BN.md.
 [2026-11-03 13:20] bdt222 v3 capture: desktop 1920 member-center modal all menus/tabs, mobile 390 all pages popup-free; workflow plan saved.
+
+- 2026-11-03 13:30 UTC owner decided: mystery bonus day 23, rescue fund max ৳80,000 — both already live (mystery_rules triggerDayOfMonth=23; rescue active top tier 1,000,000→80,000).
