@@ -1,5 +1,11 @@
 # Remaining work
 
+## 2026-11-03 full-site bdt222 implementation
+- [ ] Produce one section-by-section implementation and acceptance plan covering desktop/mobile, guest/member flows, admin controls, live PHP data and database changes.
+- [ ] Apply approved rule corrections with mirrored source, tests, backup and live readback.
+- [ ] Finish page, popup and artwork parity in the existing theme; remove invented member counts.
+- [ ] Verify member actions and admin changes end-to-end, documenting actual evidence and deferred cron/APK/iOS.
+
 ## 2026-11-03 14:30 remix connection
 - [x] Replace DBSERVER_URL and NEEXT_MASTER_KEY through the secure form; authenticated server ping HTTP200 verified.
 
