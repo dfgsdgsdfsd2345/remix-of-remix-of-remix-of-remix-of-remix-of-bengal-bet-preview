@@ -10,10 +10,14 @@ describe('missions, referral levels and promotion list', () => {
     expect(m.tiers[0]).toEqual({ bet: 1000, bonus: 3 });
     expect(m.tiers[25]).toEqual({ bet: 200000000, bonus: 300000 });
   });
-  it('referral medal levels: 10 levels, level 2 needs 4 friends for ৳150', () => {
+  it('referral medal levels: 49 levels, 10 friends earn ৳1,500', () => {
     const l = validatePromoRules(PROMO_RULE_DEFAULTS).referralLevels;
-    expect(l.tiers).toHaveLength(10);
-    expect(l.tiers[1]).toEqual({ friends: 4, bonus: 150 });
+    expect(l.tiers).toHaveLength(49);
+    expect(l.tiers[0]).toEqual({ friends: 10, bonus: 1500 });
+  });
+  it('referral final milestone: 100,000 friends earn ৳3,000,000', () => {
+    const l = validatePromoRules(PROMO_RULE_DEFAULTS).referralLevels;
+    expect(l.tiers[48]).toEqual({ friends: 100000, bonus: 3000000 });
   });
   it('rejects mission tiers out of ascending order', () => {
     const bad = { ...PROMO_RULE_DEFAULTS, missions: { ...PROMO_RULE_DEFAULTS.missions, tiers: [{ bet: 5000, bonus: 1 }, { bet: 1000, bonus: 2 }] } };
