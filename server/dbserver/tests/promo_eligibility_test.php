@@ -12,7 +12,7 @@ class Database {
             return ['t'=>self::$bet];
         }
         if(str_contains($sql,'FROM transactions'))return self::$deposit>0?['id'=>'approved']:null;
-        if(str_contains($sql,'FROM site_settings'))return null;
+        if(str_contains($sql,'config_json')||str_contains($sql,'FROM site_settings'))return null;
         throw new RuntimeException('Unexpected eligibility query');
     }
     static function execute($sql,$params=[]) {
