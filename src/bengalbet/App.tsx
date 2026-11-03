@@ -86,6 +86,8 @@ export default function App() {
   // Official Notice Announcement Modal State (Auto-pops up on initial visit unless dismissed today)
   const [isNoticeOpen, setIsNoticeOpen] = useState(false);
   const [shouldOpenEggAfterNotice, setShouldOpenEggAfterNotice] = useState(false);
+  // bdt222 order for members: golden egg -> treasure box (super value) -> announcement.
+  const [shouldOpenNoticeAfterChest, setShouldOpenNoticeAfterChest] = useState(false);
 
   // URL Path Synchronization & Initial Load Handling
   useEffect(() => {
@@ -185,36 +187,20 @@ export default function App() {
       // Notice Announcement Modal shows for BOTH authenticated & non-authenticated users
       const hideDate = localStorage.getItem('bengalbet_hide_notice_today') || localStorage.getItem('bengalbet_hide_notice_today');
       const today = new Date().toDateString();
-      if (hideDate !== today) {
-        setIsNoticeOpen(true);
-        // Only queue Golden Egg & Super Value sequence if user is already authenticated
-        if (isAuthUser) {
-          const isEggRenewing = isGoldenEggInRenew();
-          if (!isEggRenewing) {
-            setShouldOpenEggAfterNotice(true);
-            setShouldOpenSuperValueAfterEgg(true);
-          } else {
-            // Golden egg is in renew cooldown, skip egg and queue super value reward directly
-            setShouldOpenEggAfterNotice(false);
-            setShouldOpenSuperValueAfterEgg(true);
-          }
+      const noticeDue = hideDate !== today;
+      if (isAuthUser) {
+        setShouldOpenEggAfterNotice(false);
+        setShouldOpenNoticeAfterChest(noticeDue);
+        if (!isGoldenEggInRenew()) {
+          setIsGoldenEggOpen(true);
+          setShouldOpenSuperValueAfterEgg(true);
         } else {
-          setShouldOpenEggAfterNotice(false);
-          setShouldOpenSuperValueAfterEgg(false);
+          setIsSuperValueRewardOpen(true);
         }
-      } else {
-        // If notice was dismissed today, trigger Golden Egg only for authenticated users if not in renew cooldown
-        if (isAuthUser) {
-          const isEggRenewing = isGoldenEggInRenew();
-          if (!isEggRenewing) {
-            setIsGoldenEggOpen(true);
-            setShouldOpenSuperValueAfterEgg(true);
-          } else {
-            // Golden egg in renew cooldown: open super value reward directly
-            setIsSuperValueRewardOpen(true);
-          }
-        }
+      } else if (noticeDue) {
+        setIsNoticeOpen(true);
       }
+    }
     }, 700);
 
     return () => {
@@ -621,6 +607,10 @@ export default function App() {
       isLoggedIn: true
     }));
     setIsAuthOpen(false);
+    setIsNoticeOpen(false);
+    setShouldOpenEggAfterNotice(false);
+    const hide = localStorage.getItem('bengalbet_hide_notice_today');
+    setShouldOpenNoticeAfterChest(hide !== new Date().toDateString());
     // User is now authenticated:
     // If golden egg is not in renew cooldown, open it; otherwise open Super Value Reward directly
     if (!isGoldenEggInRenew()) {
@@ -641,6 +631,7 @@ export default function App() {
     setIsSuperValueRewardOpen(false);
     setShouldOpenEggAfterNotice(false);
     setShouldOpenSuperValueAfterEgg(false);
+    setShouldOpenNoticeAfterChest(false);
   };
 
   const handleToggleLanguage = () => {
@@ -946,7 +937,10 @@ export default function App() {
           isOpen={isSuperValueRewardOpen && user.isLoggedIn}
           language={language}
           user={user}
-          onClose={() => setIsSuperValueRewardOpen(false)}
+          onClose={() => {
+            setIsSuperValueRewardOpen(false);
+            if (shouldOpenNoticeAfterChest) { setShouldOpenNoticeAfterChest(false); setIsNoticeOpen(true); }
+          }}
           onOpenShareModal={() => {
             setIsSuperValueRewardOpen(false);
             setIsShareOpen(true);
