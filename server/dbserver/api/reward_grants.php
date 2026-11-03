@@ -1,9 +1,9 @@
 <?php
 /**
  * One-time reward grants that follow the promotion plan:
- * - daily login: 1 golden-egg hammer per day
+ * - daily login: 1 golden-egg hammer per day once lifetime deposits >= 200 and slot/fishing valid bets >= 1000
  * - approved deposit: +1 golden egg each, up to 3 per day; approved deposit >= 1000: 1 lucky-wheel ticket per day
- * - referral: 300 once when the friend has approved deposits >= 500 and turnover >= 2000
+ * - referral: 300 once when the friend has approved deposits >= 300 and turnover >= 3000
  * - red packet rain: admin rounds (plan: 00/12/16/20 for 30 minutes), 1 per member, first N members
  * All grants are idempotent through reward_grants (user_id, grant_key).
  */
@@ -14,8 +14,17 @@ function bbGrantOnce(string $uid, string $key): bool {
     bbRequireBonusDeposit($uid);
     return Database::execute('INSERT IGNORE INTO reward_grants (user_id, grant_key, created_at) VALUES (?,?,?)', [$uid, substr($key, 0, 64), date('Y-m-d H:i:s')]) === 1;
 }
+/** bdt222 conditions: lifetime approved deposits and slot+fishing valid bets. */
+function bbMemberSlotFishTotals(string $uid): array {
+    $dep = (float)Database::fetchOne("SELECT COALESCE(SUM(amount),0) t FROM transactions WHERE user_id=? AND type='deposit' AND status='success'", [$uid])['t'];
+    $bet = (float)Database::fetchOne("SELECT COALESCE(SUM(valid_bet),0) t FROM bets WHERE user_id=? AND category IN ('slot','fishing')", [$uid])['t'];
+    return ['deposit' => $dep, 'bet' => $bet];
+}
+foreach (['BB_LOGIN_EGG_MIN_DEPOSIT'=>200,'BB_LOGIN_EGG_MIN_BET'=>1000,'BB_APP_BONUS_MIN_DEPOSIT'=>500,'BB_APP_BONUS_MIN_BET'=>5000] as $k=>$v) if (!defined($k)) define($k,$v);
 function bbDailyLoginEgg(string $uid): bool {
     if(!bbHasLifetimeDeposit($uid))return false;
+    $tot = bbMemberSlotFishTotals($uid);
+    if ($tot['deposit'] < BB_LOGIN_EGG_MIN_DEPOSIT || $tot['bet'] < BB_LOGIN_EGG_MIN_BET) return false;
     $n = (int)bbPromoRules()['loginHammerPerDay'];
     if ($n <= 0 || !bbGrantOnce($uid, 'login_egg:' . date('Y-m-d'))) return false;
     Database::execute('UPDATE users SET golden_eggs_available = golden_eggs_available + ? WHERE id = ?', [$n, $uid]);
@@ -33,7 +42,7 @@ function bbDepositGrants(string $uid, float $amount): void {
     }
 }
 function bbReferralSettings(): array {
-    $defaults = ['enabled' => true, 'instantBonusPerFriend' => 300, 'minDepositToQualify' => 500, 'minBetTurnoverToQualify' => 2000, 'depositRebateRate' => 0.70, 'betTurnoverRebateRate' => 1.00, 'maxBonusCap' => 100000, 'autoCreditInstantBonus' => true];
+    $defaults = ['enabled' => true, 'instantBonusPerFriend' => 300, 'minDepositToQualify' => 300, 'minBetTurnoverToQualify' => 3000, 'depositRebateRate' => 0.70, 'betTurnoverRebateRate' => 1.00, 'maxBonusCap' => 100000, 'autoCreditInstantBonus' => true];
     $file = __DIR__ . '/../data/referral_settings.json';
     $cur = is_file($file) ? (json_decode((string)file_get_contents($file), true) ?: []) : [];
     if (!isset($cur['minBetTurnoverToQualify']) && isset($cur['minTurnoverToQualify'])) $cur['minBetTurnoverToQualify'] = $cur['minTurnoverToQualify'];
