@@ -1,12 +1,12 @@
 <?php
 /** Single mystery authority shared by admin, public terms and scheduled issuance. */
 function bbMysteryDefaults(): array {
-    return ['enabled'=>true,'minBonusAmount'=>1000,'maxBonusAmount'=>50000,'triggerDayOfMonth'=>23,'triggerHour'=>18,'minBetRequired'=>500,'promoCode'=>'','wageringTurnover'=>1,'autoCreditEnabled'=>false];
+    return ['enabled'=>true,'minBonusAmount'=>1000,'maxBonusAmount'=>50000,'triggerDayOfMonth'=>23,'triggerHour'=>18,'claimExpiryDays'=>30,'minBetRequired'=>500,'promoCode'=>'','wageringTurnover'=>1,'autoCreditEnabled'=>false];
 }
 function bbValidateMystery(array $input): array {
     $c=array_merge(bbMysteryDefaults(),$input);
     if(!is_bool($c['enabled']))throw new InvalidArgumentException('Enabled must be boolean');
-    foreach(['triggerDayOfMonth'=>[1,28],'triggerHour'=>[0,23]] as $k=>$range){
+    foreach(['triggerDayOfMonth'=>[1,28],'triggerHour'=>[0,23],'claimExpiryDays'=>[1,365]] as $k=>$range){
         if(filter_var($c[$k],FILTER_VALIDATE_INT)===false || $c[$k]<$range[0] || $c[$k]>$range[1])throw new InvalidArgumentException('Invalid mystery schedule');
         $c[$k]=(int)$c[$k];
     }

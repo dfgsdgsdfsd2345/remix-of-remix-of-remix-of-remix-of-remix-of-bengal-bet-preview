@@ -88,7 +88,8 @@ export function AdminPromoRules() {
       <div className="border border-border rounded-md p-3 space-y-3">
         <div className="flex items-center justify-between"><h3 className="font-semibold">উদ্ধার তহবিল (গতকালের লস)</h3>
           <Switch aria-label="উদ্ধার তহবিল চালু" checked={r.rescue.enabled} onCheckedChange={enabled => setRules({ ...r, rescue: { ...r.rescue, enabled } })} /></div>
-        {num('দাবির শেষ সময় (ঘণ্টা, ২৪ ঘণ্টা)', r.rescue.claimDeadlineHour, n => setRules({ ...r, rescue: { ...r.rescue, claimDeadlineHour: n } }))}
+        {num('দাবি শুরুর ঘণ্টা', r.rescue.claimFromHour ?? 22, n => setRules({ ...r, rescue: { ...r.rescue, claimFromHour: n, claimWindowHours: r.rescue.claimWindowHours ?? 24 } }))}
+        {num('দাবির মেয়াদ (ঘণ্টা)', r.rescue.claimWindowHours ?? 24, n => setRules({ ...r, rescue: { ...r.rescue, claimFromHour: r.rescue.claimFromHour ?? 22, claimWindowHours: n } }))}
         <div className="flex flex-wrap gap-3 text-sm">
           {GAME_CATEGORIES.map(c => <label key={c} className="flex items-center gap-1.5"><input type="checkbox" checked={r.rescue.categories.includes(c)} onChange={e => setRules({ ...r, rescue: { ...r.rescue, categories: e.target.checked ? [...r.rescue.categories, c] : r.rescue.categories.filter(x => x !== c) } })} />{CAT_LABEL[c]}</label>)}
         </div>
@@ -123,6 +124,7 @@ export function AdminPromoRules() {
           </div>
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold"><Switch aria-label="সদস্য দিবস চালু" checked={r.memberDay.enabled} onCheckedChange={enabled => setRules({ ...r, memberDay: { ...r.memberDay, enabled } })} />সদস্য দিবস</label>
+            {num('সদস্য দিবস দাবি শুরুর ঘণ্টা', r.memberDay.claimFromHour ?? 12, n => setRules({ ...r, memberDay: { ...r.memberDay, claimFromHour: n } }))}
             {num('মাসের তারিখ (২–২৮)', r.memberDay.day, n => setRules({ ...r, memberDay: { ...r.memberDay, day: n } }))}
             {num('ন্যূনতম বাজি ৳', r.memberDay.minBet, n => setRules({ ...r, memberDay: { ...r.memberDay, minBet: n } }))}
             {num('বোনাস %', r.memberDay.ratePercent, n => setRules({ ...r, memberDay: { ...r.memberDay, ratePercent: n } }))}

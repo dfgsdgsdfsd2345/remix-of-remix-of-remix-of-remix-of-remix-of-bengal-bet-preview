@@ -10,11 +10,11 @@ function bbCronWindows(array $rules, array $mystery, int $timestamp): array {
     return [
         'serverTime' => $now->format('Y-m-d H:i:s'), 'timezone' => 'Asia/Dhaka',
         'redPacket' => $packet['enabled'] && in_array($hour, $packet['hours'], true) && $minute < $packet['durationMinutes'],
-        'rescue' => $rules['rescue']['enabled'] && $hour < $rules['rescue']['claimDeadlineHour'],
+        'rescue' => bbRescueWindow($rules['rescue'],$timestamp)['open'],
         'slotDaily' => $rules['slotDaily']['enabled'] && $hour >= $rules['slotDaily']['claimFromHour'],
         'vipWeekly' => (int)$now->format('N') === $rules['vip']['weeklyClaimDay'],
         'vipMonthly' => (int)$now->format('j') === $rules['vip']['monthlyClaimDay'],
-        'memberDay' => $rules['memberDay']['enabled'] && (int)$now->format('j') === $rules['memberDay']['day'],
+        'memberDay' => bbMemberDayOpen($rules['memberDay'],$timestamp),
         'mystery' => !empty($mystery['enabled']) && (int)$now->format('j') === (int)$mystery['triggerDayOfMonth'] && $hour >= (int)$mystery['triggerHour'],
     ];
 }

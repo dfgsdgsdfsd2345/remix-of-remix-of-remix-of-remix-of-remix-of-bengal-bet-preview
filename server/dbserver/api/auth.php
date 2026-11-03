@@ -43,6 +43,7 @@ switch ($path) {
 
         $token = Database::makeToken($user['id']);
         if (bbDailyLoginEgg($user['id'])) $user = Database::fetchOne("SELECT * FROM `users` WHERE `id` = ?", [$user['id']]);
+        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;
@@ -141,6 +142,7 @@ switch ($path) {
             Database::errorResponse('User not found', 404);
         }
 
+        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;
@@ -166,6 +168,7 @@ switch ($path) {
         }
 
         $user = Database::fetchOne("SELECT * FROM `users` WHERE `id` = ?", [$userId]);
+        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;
@@ -245,6 +248,7 @@ switch ($path) {
             Database::insert('users', $user);
         }
 
+        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;

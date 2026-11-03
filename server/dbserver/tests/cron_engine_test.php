@@ -6,13 +6,14 @@ $r = bbPromoRulesDefaults(); $m = ['enabled'=>true,'triggerDayOfMonth'=>23,'trig
 $ts = fn($s) => (new DateTimeImmutable($s, new DateTimeZone('Asia/Dhaka')))->getTimestamp();
 check(bbCronWindows($r,$m,$ts('2026-11-03 12:00:00'))['redPacket'], 'Packet starts at scheduled minute');
 check(!bbCronWindows($r,$m,$ts('2026-11-03 12:30:00'))['redPacket'], 'Packet closes at 30 minutes');
-check(!bbCronWindows($r,$m,$ts('2026-11-03 10:00:00'))['rescue'], 'Rescue closes at 10');
+check(bbCronWindows($r,$m,$ts('2026-11-03 22:00:00'))['rescue'], 'Rescue opens at 22');
 check(bbCronWindows($r,$m,$ts('2026-11-03 09:00:00'))['slotDaily'], 'Slot opens at 9');
 check(bbCronWindows($r,$m,$ts('2026-11-23 18:00:00'))['mystery'], 'Mystery starts at configured time');
 check(!bbCronWindows($r,$m,$ts('2026-11-24 18:00:00'))['mystery'], 'Mystery stays closed next day');
 check(bbCronWindows($r,$m,$ts('2026-11-02 00:00:00'))['vipWeekly'], 'VIP Monday');
 check(bbCronWindows($r,$m,$ts('2026-11-01 00:00:00'))['vipMonthly'], 'VIP first of month');
-check(bbCronWindows($r,$m,$ts('2026-11-13 00:00:00'))['memberDay'], 'Member day 13');
+check(!bbCronWindows($r,$m,$ts('2026-11-13 11:59:59'))['memberDay'], 'Member day before noon denied');
+check(bbCronWindows($r,$m,$ts('2026-11-13 12:00:00'))['memberDay'], 'Member day noon');
 $r['redPacket']['hours']=[7]; check(bbCronWindows($r,$m,$ts('2026-11-03 07:00:00'))['redPacket'], 'Changed admin hour respected');
 $r['redPacket']['enabled']=false; check(!bbCronWindows($r,$m,$ts('2026-11-03 07:00:00'))['redPacket'], 'Disabled packet respected');
 check(!bbCronAuthorized('',null), 'Unconfigured HTTP fails closed');

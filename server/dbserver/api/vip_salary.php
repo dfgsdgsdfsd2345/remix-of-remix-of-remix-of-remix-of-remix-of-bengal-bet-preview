@@ -54,12 +54,18 @@ function bbSalaryProcess(float $deadline): int {
         try {
             $user=Database::fetchOne('SELECT * FROM users WHERE id=? FOR UPDATE',[$uid]);
             $tiers=json_decode($job['tiers_json'],true)?:[];
-            $tier=null; foreach($tiers as $t) if((int)$t['level']===(int)$user['vip_level'])$tier=$t;
+            $level=(int)$user['vip_level'];
+            if($job['reward_type']==='daily') {
+                $cutoff=(new DateTimeImmutable($job['period_key'],new DateTimeZone('Asia/Dhaka')))->modify('+1 day')->format('Y-m-d 00:00:00');
+                $history=Database::fetchOne('SELECT vip_level FROM vip_level_history WHERE user_id=? AND recorded_at<? ORDER BY recorded_at DESC,sequence DESC LIMIT 1',[$uid,$cutoff]);
+                $level=$history ? (int)$history['vip_level'] : 0;
+            }
+            $tier=null; foreach($tiers as $t) if((int)$t['level']===$level)$tier=$t;
             $amount=$tier ? (float)($tier[$job['reward_type'].'Bonus']??0) : 0;
             $lt=$job['reward_type']; $ls=$lt==='monthly'?$job['period_key'].'-01':$job['period_key'];
             $legacy=Database::fetchOne('SELECT id FROM vip_claims WHERE user_id=? AND type=? AND date>=? AND date<? LIMIT 1',[$uid,$lt,$ls,(new DateTimeImmutable($ls))->modify($lt==='daily'?'+1 day':($lt==='weekly'?'+7 days':'+1 month'))->format('Y-m-d')]);
-            if($user['status']==='active' && (int)$user['vip_level']>0 && $amount>0 && !$legacy && bbHasLifetimeDeposit($uid)) {
-                Database::execute('INSERT IGNORE INTO vip_salary_cards (id,user_id,reward_type,period_key,vip_level,amount,created_at) VALUES (?,?,?,?,?,?,?)',['vips-'.bin2hex(random_bytes(12)),$uid,$job['reward_type'],$job['period_key'],(int)$user['vip_level'],round($amount,2),date('Y-m-d H:i:s')]);
+            if($user['status']==='active' && $level>0 && $amount>0 && !$legacy && bbHasLifetimeDeposit($uid)) {
+                Database::execute('INSERT IGNORE INTO vip_salary_cards (id,user_id,reward_type,period_key,vip_level,amount,created_at) VALUES (?,?,?,?,?,?,?)',['vips-'.bin2hex(random_bytes(12)),$uid,$job['reward_type'],$job['period_key'],$level,round($amount,2),date('Y-m-d H:i:s')]);
             }
             Database::execute('UPDATE vip_salary_jobs SET cursor_id=? WHERE id=?',[$uid,$job['id']]);
             $pdo->commit(); $done++;

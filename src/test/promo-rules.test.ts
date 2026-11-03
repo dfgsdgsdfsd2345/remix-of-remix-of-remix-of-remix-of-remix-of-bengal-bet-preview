@@ -9,10 +9,12 @@ describe('promotion rules', () => {
     expect(r.wheelTicketMinDeposit).toBe(300);
     expect(r.appBonus.amount).toBe(52);
   });
-  it('red packet rounds open at 12/16/20/00 for 30 minutes only', () => {
+  it('red packet has twelve rounds every two hours, open for thirty minutes', () => {
+    expect(PROMO_RULE_DEFAULTS.redPacket.hours).toEqual([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]);
     expect(packetRound(PROMO_RULE_DEFAULTS, 16, 29)).toBe(16);
     expect(packetRound(PROMO_RULE_DEFAULTS, 16, 30)).toBeNull();
-    expect(packetRound(PROMO_RULE_DEFAULTS, 14, 0)).toBeNull();
+    expect(packetRound(PROMO_RULE_DEFAULTS, 14, 0)).toBe(14);
+    expect(packetRound(PROMO_RULE_DEFAULTS, 15, 0)).toBeNull();
     expect(packetRound(PROMO_RULE_DEFAULTS, 0, 5)).toBe(0);
   });
   it('rescue claim deadline is 10:00 for slot and fishing', () => {
@@ -40,6 +42,7 @@ describe('promotion rules', () => {
   });
   it('member day is the 13th by default', () => {
     expect(PROMO_RULE_DEFAULTS.memberDay.day).toBe(13);
+    expect(PROMO_RULE_DEFAULTS.memberDay.claimFromHour).toBe(12);
   });
   it('first-deposit bonus adds base 1x plus extra 19x, total 20x', () => {
     const w = PROMO_RULE_DEFAULTS.withdrawal;

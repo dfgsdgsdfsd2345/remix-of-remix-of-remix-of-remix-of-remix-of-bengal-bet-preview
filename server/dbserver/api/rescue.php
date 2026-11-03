@@ -11,7 +11,8 @@ $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? 'status';
 $userId = Database::requireUser();
 $input = Database::getJsonInput();
-$targetDate = date('Y-m-d', strtotime('-1 day')); // plan: yesterday's loss, claim until 10:00
+$rescueWindow=bbRescueWindow(bbPromoRules()['rescue'],time());
+$targetDate=$rescueWindow['date'];
 
 $rewardModule='rescue'; require __DIR__.'/reward_settlement.php';
 switch ($action) {
@@ -54,8 +55,9 @@ switch ($action) {
             'eligibleBonus' => $eligibleBonus,
             'matchedTier' => $matchedTier,
             'hasClaimedToday' => (bool)$claim,
-            'claimOpen' => !empty($rr['enabled']) && (int)date('G') < (int)$rr['claimDeadlineHour'],
-            'claimDeadline' => date('Y-m-d') . sprintf(' %02d:00:00', min(23, (int)$rr['claimDeadlineHour'])),
+            'claimOpen' => $rescueWindow['open'],
+            'claimStartsAt' => $rescueWindow['opensAt'],
+            'claimDeadline' => $rescueWindow['expiresAt'],
             'categories' => $rr['categories'],
             'claimRecord' => $claim,
             'tiers' => $tiers,
