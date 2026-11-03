@@ -399,9 +399,6 @@ export const MissionsModal: React.FC<MissionsModalProps> = ({
                 <Star className="w-4 h-4 text-yellow-300" />
                 <span>পুরস্কার কেন্দ্র</span>
               </div>
-              <span className="w-4 h-4 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center ml-1.5 shadow">
-                3
-              </span>
             </button>
 
             {/* 8. বন্ধুদের আমন্ত্রণ করুন (Share / Refer & Earn) */}
@@ -434,9 +431,6 @@ export const MissionsModal: React.FC<MissionsModalProps> = ({
                 <Gift className="w-4 h-4 text-yellow-300" />
                 <span>মিশন</span>
               </div>
-              <span className="w-4 h-4 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center ml-1.5 shadow">
-                1
-              </span>
             </button>
 
             {/* 10. অভ্যন্তরীণ বার্তা (Badge: unreadCount) */}
