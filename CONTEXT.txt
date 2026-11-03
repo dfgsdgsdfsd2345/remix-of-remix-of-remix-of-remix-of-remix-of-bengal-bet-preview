@@ -155,3 +155,5 @@ R13. অ্যাডমিনের সব মেনু একটা ট্য�
 [2026-11-03 13:20] bdt222 v3 capture: desktop 1920 member-center modal all menus/tabs, mobile 390 all pages popup-free; workflow plan saved.
 
 - 2026-11-03 13:30 UTC owner decided: mystery bonus day 23, rescue fund max ৳80,000 — both already live (mystery_rules triggerDayOfMonth=23; rescue active top tier 1,000,000→80,000).
+
+- 2026-11-03 13:40 UTC vip_tiers replaced with bdt222 35 bet-only tiers (deposit_target=0, VIP0 target 0) incl. upgrade/weekly/monthly; backup table vip_tiers_bak_20261103. Daily VIP salary not implemented server-side yet.
