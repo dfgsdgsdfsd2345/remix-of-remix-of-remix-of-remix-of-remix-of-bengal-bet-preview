@@ -56,6 +56,8 @@ if (($_GET['action'] ?? '') === 'app-bonus') {
         $pdo->beginTransaction();
         $user = Database::fetchOne('SELECT * FROM users WHERE id=? FOR UPDATE', [$userId]);
         if (!$user || $user['status'] !== 'active') throw new RuntimeException('সক্রিয় সদস্য অ্যাকাউন্ট প্রয়োজন।');
+        $tot = bbMemberSlotFishTotals($userId);
+        if ($tot['deposit'] < BB_APP_BONUS_MIN_DEPOSIT || $tot['bet'] < BB_APP_BONUS_MIN_BET) throw new RuntimeException('অ্যাপ বোনাসের জন্য মোট জমা কমপক্ষে ৳৫০০ এবং স্লট/ফিশিং-এ মোট বৈধ বাজি ৳৫,০০০ হতে হবে। এখন জমা ৳'.number_format($tot['deposit'],2).', বাজি ৳'.number_format($tot['bet'],2).'।');
         if (!bbGrantOnce($userId, 'app_bonus')) throw new RuntimeException('অ্যাপ বোনাস আগেই নেওয়া হয়েছে।');
         $amt = round((float)$ab['amount'], 2);
         Database::execute('UPDATE users SET balance=balance+? WHERE id=?', [$amt, $userId]);
