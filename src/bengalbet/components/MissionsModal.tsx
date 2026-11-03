@@ -399,9 +399,6 @@ export const MissionsModal: React.FC<MissionsModalProps> = ({
                 <Star className="w-4 h-4 text-yellow-300" />
                 <span>পুরস্কার কেন্দ্র</span>
               </div>
-              <span className="w-4 h-4 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center ml-1.5 shadow">
-                3
-              </span>
             </button>
 
             {/* 8. বন্ধুদের আমন্ত্রণ করুন (Share / Refer & Earn) */}
@@ -434,9 +431,6 @@ export const MissionsModal: React.FC<MissionsModalProps> = ({
                 <Gift className="w-4 h-4 text-yellow-300" />
                 <span>মিশন</span>
               </div>
-              <span className="w-4 h-4 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center ml-1.5 shadow">
-                1
-              </span>
             </button>
 
             {/* 10. অভ্যন্তরীণ বার্তা (Badge: unreadCount) */}
@@ -459,6 +453,21 @@ export const MissionsModal: React.FC<MissionsModalProps> = ({
                   {unreadCount}
                 </span>
               )}
+            </button>
+
+            {/* 11. ম্যানুয়াল রিবেট */}
+            <button
+              id="personal-center-tab-rebate"
+              ref={activeSidebarMenu === 'rebate' ? activeTabRef : null}
+              onClick={() => setActiveSidebarMenu('rebate')}
+              className={`px-3 md:px-4 py-2 md:py-2.5 flex items-center gap-2 md:gap-3 text-xs sm:text-sm font-semibold rounded-lg md:rounded-none transition-all shrink-0 cursor-pointer ${
+                activeSidebarMenu === 'rebate'
+                  ? 'bg-[#104e38] text-white font-bold shadow-inner border border-emerald-400/40 md:border-transparent ring-1 ring-emerald-400/20 md:ring-0'
+                  : 'text-gray-300 hover:bg-[#093527] hover:text-white'
+              }`}
+            >
+              <PieChart className={`w-4 h-4 ${activeSidebarMenu === 'rebate' ? 'text-emerald-300' : 'text-gray-300'}`} />
+              <span>ম্যানুয়াল রিবেট</span>
             </button>
           </div>
         </aside>

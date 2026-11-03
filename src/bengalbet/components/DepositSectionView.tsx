@@ -48,7 +48,7 @@ const GATEWAYS: GatewayChannel[] = [
   { id: 'axis', name: 'পরিশোধ-AXIS' },
 ];
 
-const AMOUNT_OPTIONS = [100, 200, 500, 1000, 3000, 5000, 10000, 25000, 50000].map((amount) => ({ amount }));
+const AMOUNT_OPTIONS = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 3000, 5000, 10000, 20000, 30000, 50000].map((amount) => ({ amount }));
 
 export const DepositSectionView: React.FC<DepositSectionViewProps> = ({
   user,

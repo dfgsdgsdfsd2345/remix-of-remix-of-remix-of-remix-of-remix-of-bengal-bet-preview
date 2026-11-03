@@ -50,8 +50,8 @@ const CHANNELS: ChannelItem[] = [
 ];
 
 const PRESET_AMOUNTS = [
-  200, 500, 1000, 3000, 5000,
-  10000, 25000, 50000
+  100, 200, 300, 400, 500, 600, 700, 800, 900,
+  1000, 3000, 5000, 10000, 20000, 30000, 50000
 ];
 
 export const DepositMobileView: React.FC<DepositMobileViewProps> = ({
@@ -501,7 +501,7 @@ export const DepositMobileView: React.FC<DepositMobileViewProps> = ({
 
           {/* Quick Preset Buttons (5 top, 3 bottom) */}
           <div className="grid grid-cols-5 gap-2 pt-1">
-            {PRESET_AMOUNTS.map((amt) => {
+            {PRESET_AMOUNTS.filter((amt) => amt >= depositLimits.min && amt <= depositLimits.max).map((amt) => {
               const isSelected = activeAmount === amt;
               const bonusAmt = previewBonus(amt);
               return (
