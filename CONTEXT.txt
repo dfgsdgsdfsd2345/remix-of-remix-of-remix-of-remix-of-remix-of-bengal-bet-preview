@@ -163,3 +163,5 @@ R13. অ্যাডমিনের সব মেনু একটা ট্য�
 - 2026-11-03 14:00 UTC withdraw_guard: 15 requests/day cap under member lock (rejected excluded); uploaded + byte readback; not member-tested.
 
 - 2026-11-03 14:10 UTC App.tsx popup order changed to bdt222 (egg -> super value -> notice) via shouldOpenNoticeAfterChest; guest notice verified in browser; real member login not browser-verified.
+
+- 2026-11-03 owner: no red-packet sending for now (if later: withdrawable funds only); no points mall. Security score already exists.
