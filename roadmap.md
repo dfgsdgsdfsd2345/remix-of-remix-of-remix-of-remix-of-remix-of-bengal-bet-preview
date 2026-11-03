@@ -4,7 +4,10 @@
 - [x] First-pass saved13rules/source/live-config comparison recorded in docs/bdt222/ALIGNMENT_AUDIT_BN.md.
 - [x] Guest/member1920desktop and390mobile baseline, desktop menu presence/mobileVIP verified; test member removed.
 - [x] Mobile dailyVIP benefit added;96tests pass; financial ambiguities gathered.
-- [ ] Apply owner decisions for remaining money/time/expiry rules, prior-dayVIP history, popup/app/prize policies; complete exhaustive UI/flow/artwork matrix and fresh60day model. Awaiting consolidated answers.
+- [ ] Implement approved deposit100–50000,12red rounds,memberday12:00,mystery30day and wheelEOD expiry,rescue22:00+24h,prior-dayVIP history.
+- [ ] Preserve deposit referral0.7%; gate bet commission on qualified friend. Add admin-managed noncash pending/delivery flow with gift-code support submission.
+- [ ] Red packet eligibility reference requested as bdt888; blocked on exact URL. Keep current popups/browser rewards.
+- [ ] Complete exhaustive UI/flow/artwork matrix and fresh60day model after rule changes.
 
 ## 2026-11-03 live daily VIP verification
 - [x] Verify exact live salary source and VIP1 daily amount; isolated no-deposit/approved-deposit issuance, no cash on issuance, member UI redemption, repeat denial and ledger readback; clean all test data and temporary runner.
