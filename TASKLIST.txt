@@ -1,0 +1,106 @@
+BENGALBET কাজের তালিকা — প্রতিটি কাজ শেষ হলে [x] করো, তারিখ ও পরীক্ষার ফল লেখো
+নিয়ম: CONTEXT.txt ও MARKETING_PLAN.txt মেনে কাজ। শেষে CONTEXT.txt-এর "অগ্রগতি" অংশ আপডেট।
+======================================================================
+
+শেষ হয়েছে
+[x] সার্ভার সংযোগ, মাস্টার কী সিক্রেট — ২০২৬-১১-০২, পিং ঠিক
+[x] জমা অফার ৪৭% প্রথম জমা — ২০২৬-১১-০২, টেস্ট সদস্যে পরীক্ষিত
+[x] ডিম/লাল খাম/চাকা সার্ভার পুরস্কার, গ্রান্ট একবার — ২০২৬-১১-০২
+[x] অ্যাডমিন প্রোমোশনের নিয়ম পেইজ + রিসেট — ২০২৬-১১-০২
+[x] সাধারণ গেম স্ক্রিন সার্ভার রাউন্ডে — ২০২৬-১১-০২
+[x] স্লট বোনাস, রিবেট, সদস্য দিবস — ২০২৬-১১-০২
+[x] উত্তোলনের বাজির শর্ত আসল — ২০২৬-১১-০২
+[x] দৈনিক মিশন, রেফার লেভেল, লিডারবোর্ড, প্রোমোশন তালিকা এডিটর — ২০২৬-১১-০২, ৫৯ টেস্ট পাস
+[x] তিনটি প্ল্যান ফাইল মূল ফোল্ডারে — ২০২৬-১১-০২
+
+বাকি (উপর থেকে ক্রমে করো)
+[x] ২৪-ক. Scoped desktop admin46% deposit/app53 saved/readback; authenticated member top53 rendered. Settings restored, member removed/session revoked before outage. App bar hardcoded52/install promise fixed;1280/390 unavailable-state no invented money/page errors.89 frontend/14 PHP tests/buildOK.
+[x] ২৪-খ. Mystery config survives denied card-list permission, busy guard/failure feedback; chance weight≤1000000 mirrored; task bonus/threshold2-decimal server readback normalization and tests.
+[x] ২৪-গ. Server recovered08:22; desktop/mobile scoped admin46%/app53 edits→member top/dialog53; no-deposit denied; deposit500 stored bonus230/approval730→real app button53→wallet783. Screenshot/settings restored/accounts deleted/session revoked. Deposit form itself not submitted in browser.
+[ ] ২৪-ঘ. Chance/mystery/day2–12 and remaining whole-admin/member action matrix, artwork/time-boundary and backup restore still open; server now accessible.
+[x] ২৩-ক. 2026-11-03 08:00–08:09 UTC: desktop/mobile daily4.50 save→member API same→reset3.50; promotion save/reset fresh absence; no overflow/page errors; restored settings/deleted members/revoked scoped sessions. Fixed permitted config discarded on denied history and false promo reset confirmation.
+[x] ২৩-খ. Four friends80 parallel+20 mixed rounds/4 approvals: parent2389.60,ledger1389.60,300 each once.8 isolated scheduler calls one commit/seven busy; weekly20/monthly50 cards issuance no cash,10 parallel claims/card once,foreign denied,balance570. All temporary members/jobs/runners cleaned,state restored.87 frontend/14 PHP files/18k model pass/buildOK.
+[ ] ২৩-গ. Hosting every-minute installation (Windows/XAMPP scheduler access absent), signed APK/iOS releases (files/distribution absent), broader admin/reward/time/backup-restore matrix still open. No blanket completion.
+[ ] ২০. ২০২৬-১১-০৩ 05:46 UTC: Remix secrets replaced securely; uploaded v8 section31 authoritative. Deep member/admin/server coverage audit, missing controls/rules fixes, readback/admin-change/member desktop+mobile checks and regression/replay evidence. No incomplete work marked complete.
+[x] ২০-ক. DBSERVER_URL ও NEEXT_MASTER_KEY secure update form-এ বদলানো; বাংলায় যোগাযোগ।
+[x] ২০-খ. 2026-11-03: master ping HTTP200/MySQL connected; member/admin এবং PHP source audit। Mobile rebate fake history→server bonus ledger; VIP save/deactivate/reset fresh readback; desktop/mobile referral art তিন rate guard; monthly salary job আগে freeze নয়, due15:00 cutoff। Backup dbserver/data/backup_remix_v8_20261103_0557/vip_salary.php এবং exact live source readback verified।
+[x] ২০-গ. 81 frontend tests/21 files; 11 PHP test files + syntax checks; 60-day model 18000 users/issues={}; latest preview build OK। Model/live-DB E2E আলাদা।
+[ ] ২০-ঘ. Same-second wagering durable ordering; salary-card admin stats; daily/new-member reset contracts; authenticated admin actual UI save/member readback; mobile reward-center exit/navigation; real-DB concurrency/schedule catch-up। Hosting cron installation proof ও actual APK/iOS release files/access missing।
+[ ] ১৯. ২০২৬-১১-০৩ 03:08 UTC: ব্যবহারকারীর পূর্ণ v6 source/member/admin/artwork/settings live recheck ও স্বয়ংক্রিয় প্রতি-মিনিট hosting cron installation; verified defect fixes, isolated tests, exact settings restore এবং পৃথক evidence report।
+[ ] ১৮. v6 confirmed last-deposit calendar-month expiry + fixed blocked-balance target cumulative new deposits + lifetime-approved-deposit prerequisite all bonuses; direct master deployment and live verification.
+[x] ১৮-ক. v6 plan অংশ ২৩ ও conflicting মাসিক gate সংশোধন; sandbox secret master ping success।
+[x] ১৮-খ. Durable activation/deposit/cron/withdraw/error and recipient lifetime gates; ১০ PHP files/৭১ frontend tests pass. All legacy paths exhaustive audit still #১৭-চ.
+[x] ১৮-গ. Remote backups/schema/exact source readback; live target১৫২২ partial৫০০ remaining১০২২→full reopen; desktop/mobile submit error and recipient-no-deposit commission০ verified; shared original settings unchanged.
+[ ] ১৮-ঘ. Complete whole-site 1:1/accelerated two-month/concurrency/artwork/cPanel installation remains separate open matrix.
+[ ] ১৭. ২০২৬-১১-০৩ ০২:২২ UTC: আগে বিস্তারিত v5 পরিকল্পনা; mystery শর্ত/ছবি audit ও cron নগদ কার্ড; এই বাংলাদেশি মাসে অনুমোদিত জমা না থাকলে withdrawal submit-এ “Deposit first to activate your withdrawal”; সব credit base ১× ও প্রথম bonus extra ৮×; desktop/mobile/member/admin/server ও দুই মাসের boundary matrix আলাদা evidence-সহ ধাপে পরীক্ষা। Remote mutation/deployment connection বর্তমানে unlinked (setup declined)।
+[x] ১৭-ক. v5 ২২ অংশে সম্প্রসারিত: mystery actual defaults/period/card নিয়ম, monthly-deposit gate, সব অর্থের শ্রেণি, ২৪ artwork অমিল, বিস্তারিত desktop/mobile/admin/server/৬০-day checklist; Files versioned text প্রস্তুত।
+[x] ১৭-খ. Local PHP withdrawal deposit gate-এর failing reproduction→fix→same test pass; মাস শুরু/শেষ, pending/rejected/zero/foreign/bonus/previous-month/delayed approval tests pass। Live upload নয়।
+[x] ১৭-গ. Local mystery shared config/admin readback, cron queue/cards, owned locked redemption, canonical grant+bonus ledger, member ticket buttons; ৳২,৫০০→ঠিক ৳২,৫০০ cash+১×, foreign/duplicate reject ও injected ledger rollback pass; ৬০-day period/Dhaka boundaries pass। Real MySQL queue/parallel tests নয়।
+[x] ১৭-ঘ. ৭১ frontend tests ও existing ১৮,০০০-member replay issues={}। Replay old direct salary/mystery model, নতুন card/gate live proof নয়। Desktop/mobile home/promotion navigation no page error; authenticated flow বাকি।
+[ ] ১৭-ঙ. Remote deployment/schema/cron installation, signed-in member card claim ও withdrawal error, admin config save/reset/readback, real DB parallel/crash/catch-up tests: DBServer secure connection restored প্রয়োজন।
+[ ] ১৭-চ. Local next: same-second wagering cutoff, salary historical eligibility/statistics, missing mirror dependencies, legacy manual drop/issue bypass, partial ticket errors, remaining image/view/action coverage।
+[ ] ১৬. ২০২৬-১১-০৩: সব নতুন non-game-win wallet credit-এ সাধারণ ১×; প্রথম জমা বোনাসে অতিরিক্ত ৮× (মোট ৯×), অ্যাডমিন সম্পাদনা; VIP সাপ্তাহিক/মাসিক নগদ কার্ড ক্রনে স্বয়ংক্রিয়, অঙ্ক বর্তমান VIP tier plan থেকে; একবার redemption ও পুনরায় ক্রন পরীক্ষা।
+[ ] ১৫. পূর্ণ ১:১ অডিট — ২০২৬-১১-০৩: v4 বিস্তারিত টেক্সট নথি ও ৪৪ ছবির inventory তৈরি; admin ৪৬% deposit→member title/rules, app ৫৩→member claim once, red packet off/open/duplicate পাস; সব settings exact restored। callback missing, fake promo code, ৪৮,৬৫০ fallback, stale title/banner, chance readback equality, fake download দাবি ঠিক। ৬৮ tests ও ১৮,০০০ modeled-member simulation পাস। পূর্ণ action/concurrency, remaining baked/remote media, custom games ও actual app files এখনো সম্পূর্ণ নয়; v4 অংশ ১৭-এ তালিকা।
+[x] ১৪. সর্বশেষ সদস্য-পপআপ/অ্যাডমিন পরিবর্তনের পুনঃপরীক্ষা — ২০২৬-১১-০৩: ১০ সদস্য বিভাগ ও ১৩ অ্যাডমিন বিভাগ খুলেছে, কোনো page error নেই। শূন্য-বোনাস ব্যক্তিগত টেস্ট বার্তা তৈরি → সদস্য ইনবক্সে দেখা → শুধু সেই বার্তা মোছা → readback পাস। বার্তা snake_case mapping, create/delete confirmation, নমুনার ভুল পুরস্কার/সময় প্রতিশ্রুতি ও local reset feedback ঠিক; ৬৭ টেস্ট পাস। #১৩-এর পূর্ণ সব action/permission পরীক্ষা এখনো শেষ নয়।
+[x] ১. রেফার দুই পেইজ থেকে নমুনা রেকর্ড/বন্ধু তালিকা ও এলোমেলো চলমান পুরস্কার সরানো (ReferSectionView, InviteFriendsMobileView)
+[x] ২. পুরস্কার কেন্দ্রের "দাবি করা প্রোমো ইতিহাস" ও "টিকিট রেকর্ড" সার্ভার থেকে (RewardCenterView)
+[x] ৩. মোবাইল মেইলে সার্ভারের বার্তা (MailMobileView)
+[x] ৪. হোমের জ্যাকপট বিজয়ী আসল বড় জয় থেকে (JackpotWinnersSection)
+[x] ৫. অ্যাডমিনে ব্যানার ছবি সরাসরি আপলোড — ২০২৬-১১-০২, সার্ভারে আপলোড পরীক্ষিত, ভুল ফাইল আটকায়
+[x] ৬. উদ্ধার তহবিল (১০টার আগে), লাল খাম রাউন্ড, রহস্য পুরস্কার — ২০২৬-১১-০২ লাইভে সময় সাময়িক বদলে পাস: লাল খাম (বন্ধ সময়ে আটকায়, খোলা রাউন্ডে ১ বার, সীমা পূর্ণে আটকায়), উদ্ধার (১০টার পরে আটকায়, ৳৫,০০০ ক্ষতিতে ৳১৫০, দুবার নয়), রহস্য (দিন/ঘণ্টা ছাড়া আটকায়, বাজি না থাকলে আটকায়, একবার)। সব সেটিং আগের মানে ফেরানো।
+[x] ৭. অ্যাডমিন পেইজ ব্রাউজারে পরীক্ষা — ২০২৬-১১-০২, ১৩টি অ্যাডমিন বিভাগ এরর ছাড়া খোলে; নোটিশ, জমা বোনাস, প্রোমোশন বদলে সদস্য পেইজে দেখা গেছে, তারপর আগের মানে ফেরানো। সদস্যের নোটিশ পপআপে অ্যাডমিনের নোটিশ দেখানো যোগ হয়েছে।
+[ ] ৮. ২০টি আলাদা গেম একে একে সার্ভার রাউন্ডে (Super Ace প্রথমে) — ব্যবহারকারী বলেছেন আপাতত বাদ; শুধু একটি গেমে সার্ভার রাউন্ড লাইভ পরীক্ষিত (Super Ace, ২০২৬-১১-০২)
+[ ] ৯. শক্ত মাস্টার কী (ব্যবহারকারী সার্ভারে বদলাবে, তারপর সিক্রেট আপডেট)
+[x] ১০. ২ মাসের পূর্ণ পরীক্ষা (নকল সময়, দিনে ৩০০ নতুন সদস্য, ১৮,০০০ মোট) — ২০২৬-১১-০২; ৩টি সমস্যা ঠিক: নতুন সদস্য VIP1 থেকে শুরু, ভিআইপি নিজে বাড়ত না, নিবন্ধনে পরিকল্পনার বাইরে ফ্রি ৳৫০০/স্পিন/খাম। পুনরায় ০ সমস্যা; লাইভ সার্ভারে যাচাই। পরীক্ষা: server/tests/sim_60days.ts
+[x] ১১. রেফার কমিশন (জমা ০.৭%, বাজি ১%) লেনদেন হিসেবে লেখা ও উইথড্র শর্তে ধরা — ২০২৬-১১-০২, হ্যাঁ: কমিশন এখন "বোনাস" লেনদেন, অন্য বোনাসের বাজির শর্তে ধরা লাইভে তোলা ও পরীক্ষিত: বন্ধুর ৳১,০০০ জমায় রেফারারের শর্ত ৳৭, ৳১০০ বাজিতে আরও ৳১
+[x] ১২. নিবন্ধনে নকল ৳৫০০ "ওয়েলকাম বোনাস" লেনদেন সরানো (ব্যালেন্সে যেত না কিন্তু বাজির শর্ত ৳৫০০ বাড়াত) — ২০২৬-১১-০২ লাইভে, নতুন সদস্যের শর্ত ৳০
+[ ] ১৩. সব সদস্য ও অ্যাডমিন পেইজ প্ল্যানের সাথে ১:১ লাইভ ব্রাউজার পরীক্ষা (আবার) — চলছে: ২০২৬-১১-০২ হোম, প্রোমোশন, ১১টি গেম বিভাগ, গেম পেইজ এরর ছাড়া খোলে; নোটিশ পপআপের ভুল শিরোনাম (৩% রিবেট, ফ্রি স্পিন, দৈনিক রহস্য) ও সোনার ডিমের নকল জমা-অগ্রগতি/নকল বিজয়ী/ভুল কাউন্টডাউন ঠিক। সাইড মেনু পাস (২০২৬-১১-০২ রাত): অফার, মিশন, লাকি স্পিন, লাল খাম, ভিআইপি, পুরস্কার কেন্দ্র খোলে; ঠিক: ভিআইপি পেইজ সাদা হয়ে যেত (সংখ্যা না থাকলে ক্র্যাশ), ভিআইপি রিবেটে ফাঁকা %, চাকার নকল বিজয়ী, পুরস্কার কেন্দ্রে লাকি স্পিন '৳১৫০ পর্যন্ত', রহস্য কার্ডে নকল কোড/ফোন-ইমেল শর্ত; রহস্য কার্ডের দিন/সময়/অংক এখন সার্ভার সেটিং থেকে। বাকি: জমা, উত্তোলন, রেফার, রিবেট, মেইল পপআপ (জমা, উত্তোলন, মিশন, রেফার, ভিআইপি, রিবেট, মেইল, পুরস্কার কেন্দ্র) ও অ্যাডমিনের প্রতিটি বিভাগ
+
+## v8 (2026-11-03) — site/image amounts become the plan
+- [x] v8 plan written (amount table section 31) from member site text, code and promo images; v7 extra rules kept
+- [x] Rebate 3% live (was 1%); monthly VIP card at 15:00 (new admin setting); weekly Monday 00:00
+- [x] First-deposit art 87% -> 47%; iPhone wheel art cleaned; partner/free-spin notice slides replaced
+- [x] Promo banners shown only while printed numbers equal live values; Bengali digits in rule lines
+- [x] VIP salary buttons -> automatic-card wording (desktop/mobile/modal); reward center "প্রথমে জমা করুন" for no-deposit members
+- [x] Live upload + readback: vip_salary.php, promo_rules.php, auth.php; plan copy data/MARKETING_PLAN_v8.txt
+- [ ] Every-minute cron on hosting (needs hosting access)
+- [ ] Watch real-time card issue at Mon 00:00 / 1st 15:00 / 23rd 18:00; live 3% rebate claim with a deposited member
+
+[x] v8 অংশ ৩১ লাইভ সার্ভার/অ্যাডমিন/সদস্য পাতার সাথে মেলানো (২০২৬-১১-০৩)
+
+[2026-11-03] v8 sec33: cron verified (/api/cron.php + X-Cron-Key), VIP weekly/monthly cards issued, rebate 3% verified (606 of 20200), VIP tier camelCase mapping fixed. Open: mystery/VIP card redemption live proof, referral 300 test, APK/iOS files.
+[2026-11-03] Mystery card live: issued to test member only via scoped job, redeemed ৳41,254.48 once, second redeem rejected, job removed. Referral live: friend deposit 3000 + bet 2000 -> inviter +341 (300 instant + 0.7% deposit 21 + 1% bet 20), paid flag set.
+
+[ ] ২১. 2026-11-03 06:05 UTC: ব্যবহারকারী বাকি সব কাজ শেষ করতে বলেছেন—কোনো অংশ বাদ নয়; #২০-ঘ এবং আগের অসমাপ্ত প্রমাণসহ পুনরায় যাচাই।
+
+[x] ২২-ক. 2026-11-03 07:25–07:42 UTC: isolated member creation/cleanup; 12 concurrent deposit approvals, 25 then 40-way server rounds, exact ledger balance, lifetime-deposit gate, app duplicate denial, turnover/withdraw/refund flow passed.
+[x] ২২-খ. Shared transactional financial_clocks + 3 InnoDB triggers installed after writer pause; every inserted cash/withdraw/bet and approved deposit gets unique recipient order. Same-second bonus→bet→withdraw and clock/ledger rollback tested in real MySQL. Rebate cursor uses same order; new ৳10 bet pays ৳0.30 once. Unknown historical order remains conservative.
+[x] ২২-গ. Universal old-password exception removed; live 123456 bypass rejected and original password login preserved. Header fabricated random balance removed; server-only refresh regression. 86 frontend / 13 PHP test files / 18k-member model pass; build OK.
+[x] ২২-ঘ. Authenticated real member: 11 desktop and 12 mobile sections visited, screenshots, no page errors/overflow; account and linked test data removed with readback. Salary report admin read and guest401 verified.
+[ ] ২২-ঙ. Full admin browser save/reset matrix requires scoped admin authentication; operational master key is never injected into browser. Exhaustive promotion boundary/referral concurrency matrix remains unverified.
+[ ] ২২-চ. Hosting scheduler installation evidence unavailable (last run stale); signed APK/iOS artifacts and distribution access unavailable. Native installation and scheduled real-time issuance not asserted passed.
+
+- [x] 2026-11-03 money integrity constraints + concurrency stress + admin salary-card stats
+
+[x] ২৩. 2026-11-03 15:45: সদস্য/অ্যাডমিন লাইভ সুইপ (ডেস্কটপ) — সব পাতা/১৩ অ্যাডমিন বিভাগ খোলে, ৫০০ ত্রুটি নেই; ৫টি সদস্য পপআপ পুনঃপ্রমাণ বাকি
+[ ] ২৪. bdt222 নিয়ম (v9 অংশ ৩৫) বসানো — মালিকের অনুমতির অপেক্ষায়
+
+[x] ২৪-ক. 2026-11-03 16:15 ঢাকা: bdt222 নিয়ম লাইভে — রিবেট ধাপ ০.৩/০.৬/১.৫/৩% (মোট বাজি ১/১০ লাখ/১ কোটি/৫ কোটি), দৈনিক স্লট ২৬ ধাপ যোগফল সর্বোচ্চ ৳১৭,৭৭৭, প্রথম জমা নির্দিষ্ট ধাপ ৳১০০→৪৭…৳১ লাখ→৩৭,৭৭৭ ও মোট ২০x, লাকি হুইল ৳৩০০, উদ্ধার ১২ ধাপ ৳১০→৳৮০,০০০; ব্যাকআপ dbserver/data/backup_v9_bdt222_20261103_1010, readback মিলেছে, ৯৫ টেস্ট পাস
+[ ] ২৪-খ. বাকি bdt222: ভিআইপি ৩৪ স্তর ও দৈনিক বেতন, রেফার মাইলস্টোন ও ৳৩০০-এর শর্ত, অ্যাপ ৳৫২-এর শর্ত, সোনার ডিমের শর্ত, উদ্ধারের রাত ১০টা সময়
+[ ] ২৫. bdt222 পাতার গঠন/অ্যানিমেশন আমাদের থিমে — পরীক্ষার ব্রাউজারে সাইট খোলে না; ব্যবহারকারীর স্ক্রিনশট দরকার
+[ ] ২৬. sim_60days এখন vip-level-above-plan দেখায় (ভিআইপি অংশ, এই পরিবর্তনের বাইরে) — যাচাই বাকি
+
+==== ২০২৬-১১-০৩ বাকি কাজের বিস্তারিত তালিকা (bdt222 v9) ====
+[ ] ২০-ক. VIP ৩৪ ধাপ: bdt222 টেবিল (বাজি/জমা লক্ষ্য, দৈনিক বেতন, আপগ্রেড বোনাস) সার্ভার+অ্যাডমিন+সদস্য পেইজে; পুরনো সদস্যের লেভেল কখনো না কমানো।
+[ ] ২০-খ. sim_60days-এ "vip-level-above-plan" (২৫,১৩৭ বার) কারণ খুঁজে ঠিক করা, তারপর ০ সমস্যা নিশ্চিত।
+[ ] ২০-গ. রেফার: মাইলস্টোন পুরস্কার টেবিল + বন্ধুর ৳৩০০ জমা শর্ত, idempotent grant।
+[ ] ২০-ঘ. অ্যাপ ডাউনলোড ৳৫২ শর্ত (জমা/বাজি) ও একবার দাবি।
+[ ] ২০-ঙ. সোনার ডিম শর্ত bdt222 অনুযায়ী (জমা পরিমাণ→ডিম সংখ্যা)।
+[ ] ২০-চ. উদ্ধার তহবিল সময়সীমা রাত ১০টা ও নতুন ১২ ধাপের লাইভ দাবি পরীক্ষা।
+[ ] ২০-ছ. রহস্যময় বোনাস ও দৈনিক লগইন ভাগ্যবান বোনাস — bdt222 নিয়ম পড়া যায়নি; স্ক্রিনশট লাগবে।
+[ ] ২০-জ. প্রথম জমা ৮ ধাপ, স্লট ২৬ ধাপ, রিবেট ০.৩–৩% — সাইন-ইন সদস্য দিয়ে আসল জমা/বাজি করে ব্রাউজারে শেষ থেকে শেষ পরীক্ষা (ডেস্কটপ+মোবাইল)।
+[ ] ২০-ঝ. অ্যাডমিনে নতুন tier টেবিল সম্পাদনা (স্লট/রিবেট/জমা) + সেভ readback + reset।
+[ ] ২০-ঞ. bdt222-এর মতো পেইজ গঠন/অ্যানিমেশন (ডেস্কটপ+মোবাইল) আমাদের থিমে — ব্যবহারকারীর স্ক্রিনশট দরকার।
+[ ] ২০-ট. নতুন ছবি (আমাদের থিমে) সব প্রোমো ব্যানারের জন্য; ছাপা সংখ্যা লাইভ মানের সাথে মেলানো।
+[ ] ২০-ঠ. বাকি ৫ সদস্য মেনু (উত্তোলন, রেফার, রিবেট, মেইল, মিশন) পপআপ বন্ধ করে পুনরায় ব্রাউজার পরীক্ষা।
+[ ] ২০-ড. পুরনো খোলা কাজ: #৮ (২০ গেম সার্ভার রাউন্ড), #৯ (শক্ত মাস্টার কী), #১৭-ঙ/চ, #১৮-ঘ।

@@ -1,0 +1,149 @@
+BENGALBET — পূর্ণ প্রজেক্ট প্ল্যান ও কাজের ধারা (এজেন্টের জন্য প্রসঙ্গ ফাইল)
+সংস্করণ: ২ নভেম্বর ২০২৬ · উদ্দেশ্য: শুধু টেস্ট (আসল বাংলাদেশি গ্রাহক নয়, সার্ভারের সব তথ্য টেস্ট তথ্য)
+======================================================================
+
+০. এজেন্টের জন্য অবশ্য মানতে হবে এমন নিয়ম (ভুল এড়াতে)
+----------------------------------------------------------------------
+R1. টাকা, বোনাস, পুরস্কার, গেমের ফল — সব সার্ভার ঠিক করে। সদস্যের পেইজ কখনো নিজে ব্যালেন্স বাড়াবে না, পুরস্কার বাছবে না।
+R2. প্রতিটি পুরস্কার "একবারই" — সার্ভারে reward_grants চাবি (সদস্য + grant key) দিয়ে। পেইজে কাউন্টার বা ক্রেডিট বানানো নিষেধ।
+R3. সার্ভারের সফল পুরস্কার পেলে শুধু onSettledReward দিয়ে ওয়ালেট আবার পড়া হয়। সাধারণ reward-claim কলব্যাকে পাঠালে দুবার টাকা হবে — নিষেধ।
+R4. সময় = বাংলাদেশ সময় (UTC+6), সার্ভারের ঘড়ি। ব্রাউজারের ঘড়িতে যোগ্যতা ঠিক করা নিষেধ।
+R5. সব অংক এক জায়গায়: সার্ভারের promo_rules (মিরর: src/bengalbet/services/promoRules.ts ও server/dbserver/api/promo_rules.php)। জমা অফার: depositOffer.ts ও deposit_offer_rules.php। দুইটা মিরর সবসময় এক রাখতে হবে।
+R6. অ্যাডমিন সেভ = সার্ভারে লেখা + আবার পড়ে মিলিয়ে দেখা (readback)। শুধু "সফল" উত্তর যথেষ্ট নয়। রিসেট = সংরক্ষিত সারি মুছে প্ল্যানের ডিফল্টে ফেরা।
+R7. সার্ভার থেকে আসা সদস্যের তথ্য userMapping দিয়ে যায়। দাবির যোগ্যতা rewardEligibility-তে, তথ্য না থাকলে "না" (fail closed)।
+R8. জমা/উত্তোলনের অবস্থা বদল: লক করা লেনদেনে pending → final একবার। চূড়ান্ত হলে আর বদলায় না; একই সিদ্ধান্ত দুবার দিলে দুবার টাকা হয় না।
+R9. আসল টাকার খেলা শুধু সার্ভার রাউন্ডে (game_rounds.php / gameRounds.ts)। স্ক্রিনে বানানো ফল = শুধু ডেমো, ব্যালেন্সে লাগবে না।
+R10. মাস্টার কী শুধু প্রজেক্ট সিক্রেট NEEXT_MASTER_KEY-তে, সার্ভার থেকে X-Master-Key হেডারে। সাইটের কোড বা ব্রাউজারে কখনো নয়।
+R11. পরীক্ষা শুধু আলাদা টেস্ট সদস্য দিয়ে। সার্ভার ফাইল বদলানোর আগে dbserver/data/backup_* এ ব্যাকআপ।
+R12. API ঠিকানা apiConfig দিয়ে; credential পাঠানোর সিদ্ধান্ত requestPolicy-তে।
+R13. অ্যাডমিনের সব মেনু একটা ট্যাব তালিকা থেকে।
+
+১. প্রজেক্টের গঠন
+----------------------------------------------------------------------
+- সাইট: src/bengalbet (React, @ts-nocheck), index.tsx ও $.tsx থেকে ক্লায়েন্ট-অনলি চলে, নিজেই পাথ দেখে পেইজ বদলায়।
+- সার্ভার: DBServer https://server.nexarofx.com/dbserver (PHP + MySQL, ~৩০ টেবিল)। কপি রাখা: server/dbserver/api/*.php (রিভিউয়ের জন্য; আপলোড হয় মাস্টার API save_file দিয়ে)।
+- সার্ভার ফাইল: auth, wallet, settings, admin, admin_rewards, deposit_offer_rules, promo_rules, promo_content, reward_grants, reward_settlement, rewards, rescue, referral, turnover_offers, turnover_guard, withdraw_guard, money_guard, ledger_mutation_guard, game_rounds, games, chance_rewards_admin, new_member_rules।
+- সাইটের সার্ভিস: api, apiConfig, requestPolicy, userMapping, rewardEligibility, settledReward, settingsPersistence, depositOffer, promoRules, promoLive, promoContent, missions, referralBoard, gameRounds, gameEngine, chanceRewards, memberTaskConfig, memberTaskState, paymentActions।
+- ছবি: ৪৪টি; প্রোমো ব্যানার "asset:<নাম>" বা https লিংক। গেম তালিকা ৭০টি, প্রোভাইডার ~১১৯।
+
+২. পুরো সাইটের কাজের ধারা
+----------------------------------------------------------------------
+নিবন্ধন → লগইন → সার্ভার "me" (ব্যালেন্স, ভিআইপি, পুরস্কার সংখ্যা) → দৈনিক লগইন হাতুড়ি ১টি (grant)
+জমা → pending → অ্যাডমিন অনুমোদন → জমা + সংরক্ষিত বোনাস একবার → ডিম +১ (দিনে ৩) → ≥৳১,০০০ হলে হুইল টিকিট (দিনে ১) → রেফারারকে ০.৭% কমিশন → বাজির শর্ত যোগ
+খেলা → সার্ভার রাউন্ড → বাজির রেকর্ড → ভিআইপি EXP, মিশনের বাজি, রিবেট, স্লট বোনাস, সদস্য দিবস, রেফারারের ১%, উত্তোলন শর্ত কমে
+দাবি → সার্ভার যাচাই (সময়, যোগ্যতা, একবার) → লক লেনদেনে টাকা + transaction রেকর্ড → পেইজ ওয়ালেট আবার পড়ে
+উত্তোলন → বাকি বাজির শর্ত ০ হলে অনুরোধ → অ্যাডমিন অনুমোদন / বাতিল (বাতিলে টাকা ফেরত একবার)
+
+৩. অফার ও নিয়ম (ডিফল্ট মান — সবই অ্যাডমিন বদলাতে পারে)
+----------------------------------------------------------------------
+৩.১ জমা বোনাস: প্রথম জমায় ৪৭%, ন্যূনতম জমা ৳৫০০, সর্বোচ্চ বোনাস ৳২০,০০০। সদস্য অপ্ট-ইন/আউট করতে পারে। জমার মুহূর্তে বোনাস হিসাব হয়ে সংরক্ষিত; অনুমোদনে একবার যোগ।
+৩.২ উত্তোলনের বাজির শর্ত: সব নতুন non-game-win wallet অর্থ ×১; প্রথম জমা বোনাসে অতিরিক্ত ×৮ (মোট ×৯)। সাধারণ ও অতিরিক্ত multiplier অ্যাডমিন বদলান; withheld অর্থ ফেরত নতুন grant নয়।
+৩.৩ দৈনিক লগইন: দিনে ১ হাতুড়ি (সোনার ডিম ভাঙতে)।
+৩.৪ সোনার ডিম: পুরস্কার ৳২০–৳১৮,২২২, সার্ভার বাছে; অনুমোদিত জমায় +১ ডিম, দিনে সর্বোচ্চ ৩।
+৩.৫ লাল খাম: রাউন্ড ০০:০০, ১২:০০, ১৬:০০, ২০:০০; প্রতিটি ৩০ মিনিট; প্রতি রাউন্ডে প্রথম ৫০ জন; ৳১০–৳৭৭,৭৭৭।
+৩.৬ ভাগ্যের চাকা: ≥৳১,০০০ অনুমোদিত জমায় দিনে ১ টিকিট; পুরস্কার ৳৫–৳১,৫০,০০০ / iPhone।
+৩.৭ উদ্ধার তহবিল: গতকালের স্লট + ফিশিং নিট ক্ষতি ≥৳১,০০০ → ধাপে ৩% / ৫% / ৮%, সর্বোচ্চ ৳৮৮,৮৮৮; দাবি পরের দিন সকাল ১০টা পর্যন্ত।
+৩.৮ দৈনিক স্লট বোনাস: গতকালের স্লট বাজি ≥৳২,০০০ → ১%, সর্বোচ্চ ৳১৮,৮৮৮; সকাল ৯টা থেকে দাবি।
+৩.৯ রিয়েল-টাইম রিবেট: বাজির ১% (সর্বোচ্চ সীমা ৩%), বাজির রেকর্ড থেকে।
+৩.১০ সদস্য দিবস: প্রতি মাসের ১৩ তারিখ; সেদিনের বাজি ≥৳১,০০০ → ১%, সর্বোচ্চ ৳১,০০,০০০।
+৩.১১ ভিআইপি: server tier-এর অঙ্ক; সোমবার সাপ্তাহিক, ১ তারিখ মাসিক নগদ কার্ড ক্রনে টিকিটে আসে; redeem-এ একবার bonus ledger ও balance, সাধারণ turnover যোগ।
+৩.১২ অ্যাপ ডাউনলোড বোনাস: ৳৫২, একবার।
+৩.১৩ রেফার: বন্ধু যোগ্য = অনুমোদিত জমা ≥৳৫০০ ও বাজি ≥৳২,০০০ → ৳৩০০ একবার। বন্ধুর জমায় ০.৭% কমিশন, বাজিতে ১%।
+৩.১৪ রেফার লেভেল-পদক (যোগ্য বন্ধু → বোনাস, প্রতিটি একবার): ২→১, ৪→১৫০, ৮→৩৫০, ১৫→৮০০, ৩০→২,০০০, ৬০→৫,০০০, ১০০→১২,০০০, ২৫০→৩৫,০০০, ৫০০→৮০,০০০, ১০০০→২,০০,০০০। নাম: সূচনা, রৌপ্য, স্বর্ণ, প্ল্যাটিনাম, ডায়মন্ড, ক্রাউন, মাস্টার, গ্র্যান্ড মাস্টার, লিজেন্ড, রয়্যাল সম্রাট।
+৩.১৫ রেফার লিডারবোর্ড: এ মাসে রেফার আয়ে সেরা ১০ (পেইজে ৩) + সাম্প্রতিক ৮টি পুরস্কার, নাম লুকানো (Te*****2)।
+৩.১৬ দৈনিক মিশন (আজকের স্লট বাজি → বোনাস, প্রতিটি ধাপ দিনে একবার, গ্রান্ট কী mission:তারিখ:ধাপ):
+  ১,০০০→৩ · ৩,০০০→৮ · ৫,০০০→১২ · ১০,০০০→১৮ · ২০,০০০→৫৬ · ৫০,০০০→১২৮ · ১,০০,০০০→২৬৮ · ২,০০,০০০→৫৮৮ · ৫,০০,০০০→১,২৮৮ · ১০,০০,০০০→২,৮৮৮ · ২০,০০,০০০→৫,৮৮৮ · ৫০,০০,০০০→১২,৮৮৮ · ১ কোটি→১৭,৭৭৭ · ১.৫ কোটি→২২,৮৮৮ · ২ কোটি→২৮,৮৮৮ · ২.৫ কোটি→৩৫,৮৮৮ · ৩ কোটি→৪২,৮৮৮ · ৪ কোটি→৫৫,৮৮৮ · ৫ কোটি→৬৮,৮৮৮ · ৬ কোটি→৮২,৮৮৮ · ৭ কোটি→৯৮,৮৮৮ · ৮ কোটি→১,১৮,৮৮৮ · ৯ কোটি→১,৩৮,৮৮৮ · ১০ কোটি→১,৬৮,৮৮৮ · ১৫ কোটি→২,১৮,৮৮৮ · ২০ কোটি→৩,০০,০০০
+৩.১৭ নতুন সদস্যের ১২ দিনের কাজ: সার্ভারের এক কনফিগে ১২টি দিন; সদস্য শুধু দিন নম্বর পাঠায়।
+৩.১৮ রহস্যময় পুরস্কার: সার্ভার বাছে।
+৩.১৯ নতুন অনুরোধ: চলতি বাংলাদেশি মাসে নিজের positive approved deposit না থাকলে withdraw submit-এ “Deposit first to activate your withdrawal”; bonus/card redeem আটকায় না। Mystery configured monthly day/hour-এ cron নগদ card দেয়; wallet+১× শুধু redemption-এ। Local mirror ও live deployment আলাদা প্রমাণ।
+বৈধতা সীমা: মিশন ও রেফার ধাপ ছোট থেকে বড় ক্রমে; রিবেট ০–৩%; সদস্য দিবস ২–২৮; ভিআইপি মাসিক ১–২৮; লাল খাম সময় ১–৫৯ মিনিট।
+
+৪. সদস্যের পেইজ (ডেস্কটপ + মোবাইল) ও অবস্থা
+----------------------------------------------------------------------
+ঠিক আছে (সার্ভার তথ্য): হোম/লবি/গেম তালিকা, লগইন/নিবন্ধন, অ্যাকাউন্ট/প্রোফাইল, জমা, উত্তোলন, সব রেকর্ড ও লাভ-ক্ষতি, প্রোমোশন পেইজ + পপআপ (দাবি বোতাম আসল অফার পেইজে যায়), মিশন, ভিআইপি, রিবেট/স্লট বোনাস/সদস্য দিবস, ডিম/চাকা, নতুন সদস্যের কাজ, নোটিশ, লাইভ চ্যাট/টিকিট/মতামত, নিরাপত্তা, কার্ড, সাহায্য, অ্যাপ বোনাস।
+আংশিক: রেফার দুই পেইজ (নমুনা রেকর্ড/বন্ধু এখনো কোডে, ডেস্কটপে চলমান পুরস্কার এলোমেলো), পুরস্কার কেন্দ্র (প্রোমো ইতিহাস ও টিকিট রেকর্ড নমুনা), মোবাইল মেইল (নমুনা মেইল), উদ্ধার/লাল খাম/রহস্য (সময়-ভিত্তিক লাইভ পরীক্ষা বাকি)।
+বাকি: হোমের জ্যাকপট বিজয়ী (এলোমেলো), ২০টি আলাদা গেম (Super Ace, Aviator, Alibaba, Anubis, Aztec, Boxing King, Circus, Crazy 777, Fortune Gems, Fortune Tree, Happy Fishing, Head/Tail, Magic Ace, Money Coming, Olympus, Piñata, Seven Coins, Super Elements, Sweet Bonanza, Wild Bounty) — শুধু ডেমো।
+
+৫. প্রোমোশন পেইজ (১৩টি মূল কার্ড)
+----------------------------------------------------------------------
+ধরন: রহস্য, রেফার, প্রথম জমা, ভিআইপি, স্লট বোনাস, অ্যাপ, উদ্ধার, সোনার ডিম, লাল খাম, iPhone চাকা, সদস্য দিবস, রিবেট, সাধারণ শর্ত। বিভাগ: hot, new_member, deposit, rebate, app_download।
+সার্ভারে তালিকা খালি থাকলে এই ১৩টি দেখায়। কার্ডের অংক নিয়ম থেকে নিজে তৈরি হয় — পেইজে হাতে লেখা অংক নিষেধ।
+
+৬. অ্যাডমিন প্যানেল (কী করা যায়)
+----------------------------------------------------------------------
+সদস্য (দেখা, ব্যালেন্স, ব্লক) · লেনদেন (অনুমোদন/বাতিল একবার) · গেটওয়ে + জমা অফার (শতাংশ, ন্যূনতম, সর্বোচ্চ, প্রথম/প্রতি জমা, রিসেট) · প্রোমোশন তালিকা (যোগ, এডিট, ক্রম, চালু/বন্ধ, মুছা, ব্যানার, রিসেট) · প্রোমোশনের নিয়ম (অংশ ৩-এর সব মান, ধাপ যোগ/মুছা, রিসেট) · ভাগ্য পুরস্কার (তালিকা ও সম্ভাবনা) · নতুন সদস্যের ১২ কাজ · ভিআইপি ধাপ · রেফার সেটিং · গেম ইঞ্জিন (RTP, ঝুঁকি, সর্বোচ্চ জয়) · সাইট কনটেন্ট/নোটিশ/ব্যানার · বার্তা, লাইভ চ্যাট, টিকিট · মাস্টার।
+অ্যাডমিন লগইন আলাদা; ব্রাউজারে অ্যাডমিন সেভ এখনো পরীক্ষা হয়নি (সার্ভার দিক পরীক্ষিত)।
+
+৭. পরীক্ষা পদ্ধতি
+----------------------------------------------------------------------
+- স্বয়ংক্রিয়: bunx vitest run (৫৯টি পাস)।
+- লাইভ: নতুন টেস্ট সদস্য বানাও → জমা → অ্যাডমিন অনুমোদন (মাস্টার API) → সার্ভার রাউন্ডে বাজি → দাবি → ব্যালেন্স ঠিক অংক বাড়ল কিনা → আবার দাবি আটকায় কিনা → নিয়ম এডিট → readback → আগের মানে ফেরাও।
+- কখনো অন্য সদস্যের টাকা বদলাবে না।
+
+৮. বাকি কাজ (অগ্রাধিকার ক্রমে)
+----------------------------------------------------------------------
+১) রেফার পেইজ থেকে নমুনা তথ্য সরানো · ২) পুরস্কার কেন্দ্রের ইতিহাস/টিকিট সার্ভার থেকে · ৩) মোবাইল মেইল সার্ভার থেকে · ৪) জ্যাকপট বিজয়ী আসল তথ্য · ৫) অ্যাডমিনে ছবি আপলোড · ৬) সময়-ভিত্তিক লাইভ পরীক্ষা · ৭) অ্যাডমিন ও মিশন পেইজ ব্রাউজার পরীক্ষা · ৮) ২০টি গেম একে একে সার্ভার রাউন্ডে · ৯) শক্ত মাস্টার কী।
+
+৯. এজেন্টের কাজের নিয়ম (প্রতিটি কাজের পর)
+----------------------------------------------------------------------
+- কাজ শুরুর আগে তিনটি ফাইল পড়ো: CONTEXT.txt (নিয়ম ও গঠন), MARKETING_PLAN.txt (পুরো সাইট প্ল্যান, কাজের ধারা, নিয়ম), TASKLIST.txt (কাজের তালিকা)।
+- একটা কাজ শেষ ও পরীক্ষা হলে: TASKLIST.txt-এ [ ] → [x] করো, তারিখ ও পরীক্ষার ফল লেখো; এই ফাইলের "১০. অগ্রগতি" অংশে এক লাইন যোগ করো; নিয়ম/অংক বদলালে অংশ ৩ ও MARKETING_PLAN.txt-ও আপডেট করো।
+- নতুন অনুরোধ এলে আগে TASKLIST.txt-এ যোগ করো।
+
+১০. অগ্রগতি (শেষ হওয়া কাজ, নতুনটা নিচে)
+----------------------------------------------------------------------
+- ২০২৬-১১-০২: সার্ভার সংযোগ ও মাস্টার কী সিক্রেট।
+- ২০২৬-১১-০২: জমা অফার এক জায়গায় (৪৭% প্রথম জমা), আগাম ব্যালেন্স যোগ সরানো।
+- ২০২৬-১১-০২: ডিম/খাম/চাকা পুরস্কার সার্ভারে, লগইন/জমা/রেফার গ্রান্ট একবার।
+- ২০২৬-১১-০২: অ্যাডমিন প্রোমোশনের নিয়ম পেইজ (রিসেট সহ), অ্যাপ বোনাস, ভিআইপি দিন।
+- ২০২৬-১১-০২: সার্ভার গেম রাউন্ড (সাধারণ স্ক্রিন), স্লট বোনাস, রিবেট, সদস্য দিবস।
+- ২০২৬-১১-০২: উত্তোলনের বাজির শর্ত আসল, নকল ১-ক্লিক বোতাম সরানো।
+- ২০২৬-১১-০২: ভিআইপি/রেফার/পুরস্কার কেন্দ্রের হাতে লেখা অংক সার্ভারের সাথে মেলানো।
+- ২০২৬-১১-০২: দৈনিক মিশন ২৬ ধাপ, রেফার লেভেল ১০টি, লিডারবোর্ড, প্রোমোশন তালিকা সার্ভারে + অ্যাডমিন এডিটর। ৫৯ টেস্ট পাস।
+- ২০২৬-১১-০২: প্ল্যান ফাইল তিনটি (CONTEXT, MARKETING_PLAN, TASKLIST) প্রজেক্টের মূল ফোল্ডারে।
+- ২০২৬-১১-০২: রেফার/পুরস্কার কেন্দ্র/মেইল নমুনা তথ্য সরানো, হোমের জ্যাকপট বিজয়ী আসল বড় জয় থেকে, অ্যাডমিনে ব্যানার ছবি আপলোড (সার্ভারে লাইভ), Super Ace সার্ভার রাউন্ড লাইভ পরীক্ষা। ৫৯ টেস্ট পাস।
+- ২০২৬-১১-০২: অ্যাডমিন ব্রাউজার পরীক্ষা পাস; সদস্যের নোটিশ পপআপ এখন অ্যাডমিনের সাইট নোটিশ প্রথমে দেখায়।
+- ২০২৬-১১-০২: ২ মাসের পূর্ণ পরীক্ষা (server/tests/sim_60days.ts) পাস। নতুন সদস্য VIP0, ৳০ ব্যালেন্স, কোনো ফ্রি স্পিন/খাম/ডিম নয়; ভিআইপি লেভেল সার্ভারে নিজে বাড়ে (vip_progress.php: বাজি ও জমা দুই লক্ষ্য পূরণ, শুধু বাড়ে) — খেলা, জমা অনুমোদন, ব্যালেন্স, ভিআইপি দাবিতে মেলানো হয়।
+
+2026-11-02: Referral deposit/bet commissions now logged as bonus transactions (bbLogReferralCommission in reward_grants.php, called from admin.php and game_rounds.php) so turnover_guard counts them under otherBonusTurnover. NEEXT_MASTER_KEY secret saved. Live server upload pending.
+- 2026-11-02: Referral commission rule uploaded live (backups in dbserver/data/backup_*), verified 0.7% deposit + 1% bet counted. Removed fake 500 welcome-bonus tx from auth.php register (live).
+- 2026-11-02: Time-based offers live-tested with temporary promo_rules/mystery config changes (all restored). NoticeAnnouncementModal titles aligned with plan; GoldenEggModal: removed fake 500/500 progress and fake winners, countdown to 00:00 BD time, prize range from server chance table.
+
+- ২০২৬-১১-০২: সাইড মেনু লাইভ পাস; ভিআইপি ক্র্যাশ ঠিক, চাকা/পুরস্কার কেন্দ্র/রহস্য কার্ডের নকল বা ভুল লেখা প্ল্যান ও সার্ভার সেটিং অনুযায়ী।
+- ২০২৬-১১-০৩: সর্বশেষ পরিবর্তন পুনঃপরীক্ষা: জমা, উত্তোলন, রেফার, মিশন, মেইল, ভিআইপি, পুরস্কার কেন্দ্র, বাজি/অ্যাকাউন্ট রেকর্ড ও লাভ-ক্ষতি এবং ১৩ অ্যাডমিন বিভাগ এরর ছাড়া খুলেছে। admin messagePersistence snake_case তথ্য মেলায়, create/delete readback ছাড়া সফল বলে না। ব্যক্তিগত শূন্য-বোনাস টেস্ট বার্তা সদস্য ইনবক্সে পৌঁছেছে ও পরে শুধু সেই বার্তা মোছা যাচাই হয়েছে; অন্য সদস্য/বার্তা বদলায়নি। বার্তা নমুনা বর্তমান জমা/VIP নিয়ম পড়ে, অপ্রমাণিত পুরস্কার ও ৩-মিনিট প্রতিশ্রুতি সরানো। জমা নমুনা ৪৭%, ৳৫০০, শুধু প্রথম জমা ব্রাউজারে যাচাই; ৬৭ টেস্ট পাস, build OK। টেস্ট সদস্য রাখা হয়েছে; সব admin action/permission ও বিশেষ গেমের পূর্ণ যাচাই অসম্পূর্ণ।
+- ২০২৬-১১-০৩ পূর্ণ অডিট: MARKETING_PLAN v4-এ পেইজ/অ্যাডমিন/৪৪ image inventory, schedule boundaries ও verification gaps যোগ, Files-এ বিস্তারিত text copy। Live admin browser ৪৬% deposit save→member popup title/rules confirmed; app amount ৫৩ save→member ৳৫৩ claim once; red packet temporary Dhaka round ৳১৭৭, duplicate/off rejected; original settings exact restored। PromotionModal missing onOpenMenu callback/null access এবং unsupported code সরানো; member printed promo banners suppress করে live titles/terms; referral ৪৮,৬৫০ fallback zero; chance-config equality test; app fake download শুরু ঘোষণা সরিয়ে server bonus claim। ৬৮ tests/build OK ও sim --fixed ১৮,০০০ users/issues={} (model, E2E নয়)। সব feature bug-free/১:১ দাবি করা হয়নি; actual app release/remote media/all concurrency/custom games/permissions remain unverified.
+- ২০২৬-১১-০৩ ০২:২২ continuation: v5 ২২ অংশের detailed revised plan ও step matrix; দুই read-only audits member/admin/server+২৪ artwork review। Local monthly deposit gate failing reproduction→fix→pass; mystery shared rules/admin readback/queue/card/redemption+grant/ledger; common ১× and first extra ৮× retained। ৭১ Vitest tests, PHP withdrawal/month boundaries, mystery ownership/rollback/once+১×/৬০-day periods, cron, salary/math pass; existing ১৮,০০০-member replay issues={} কিন্তু old direct-card model, live proof নয়। Desktop/mobile home ও promotions navigation no page error; source changes remote uploaded নয়। Workspace connector list empty; prior setup declined, তাই signed-in remote mutations/time-data/restore/schema/concurrency tests blocked। Same-second wagering, historical salary entitlement/stats, missing mirror dependencies, manual mystery legacy paths ও complete images/actions remain open in TASKLIST #১৭।
+
+- ২০২৬-১১-০৩ 02:50 UTC: v6 confirms last approved deposit calendar-month expiry, frozen blocked available-balance target satisfied by cumulative new approved principal, and lifetime approved deposit prerequisite all bonuses. Plan updated first; saved secret sandbox master ping HTTP200 success, live deployment/tests next. v5 current-calendar-month gate superseded.
+
+- ২০২৬-১১-০৩ 03:04 UTC v6: uploaded reviewed PHP and activation/mystery schemas through saved sandbox master secret, backups/exact readback. Isolated live first deposit/duplicate/bonus gating; restriction1522→deposit500 leaves1022→1022 reopen→withdraw500/refund; recipient-no-deposit referral friend deposit/round commission0. Desktop/mobile submit error screenshots pass, mobile persistent inline error. 71 frontend/10 PHP files pass; runner two calls25→50 pending without error. Shared settings/rules/offer exact unchanged; full all-pages/two-month/concurrency/admin browser/card coverage and cPanel schedule remain open.
+
+[2026-11-03 v8] Plan v8 = site/image amounts + v7 rules. Live: rebate 3%, vip.monthlyHour 15, promo content titles fixed. Server files backed up in data/backup_v8_20261103/. Browser checked offers page (desk+mobile), reward center and VIP club as a fresh no-deposit member; server blocks golden egg for no-deposit member. 76 frontend tests pass.
+
+- 2026-11-03 11:05 v8 অংশ ৩১ লাইভ মেলানো: ৩১.১–৩১.১৫ সব অঙ্ক সার্ভারে মিলেছে; পুরনো ৪টি PHP ফাইল আপলোড; সার্ভারে রাখা অফার লেখার ৯টি ভুল লাইন ঠিক (readback 0); অফার জানালার খালি "সর্বোচ্চ বোনাস" ঘর ও দুবার দেখানো লেখা ঠিক; ৭৬ টেস্ট পাস।
+
+[2026-11-03] v8 sec33: cron verified (/api/cron.php + X-Cron-Key), VIP weekly/monthly cards issued, rebate 3% verified (606 of 20200), VIP tier camelCase mapping fixed. Open: mystery/VIP card redemption live proof, referral 300 test, APK/iOS files.
+[2026-11-03] Mystery card live: issued to test member only via scoped job, redeemed ৳41,254.48 once, second redeem rejected, job removed. Referral live: friend deposit 3000 + bet 2000 -> inviter +341 (300 instant + 0.7% deposit 21 + 1% bet 20), paid flag set.
+
+[2026-11-03 06:05 UTC remix v8 audit] Secure DBSERVER_URL/NEEXT_MASTER_KEY replacement confirmed; sandbox master ping200/MySQL connected. Fixed mobile rebate fabricated history/date/GMT+8 with actual settled bonus ledger reads; VIP save/deactivation/reset confirms fresh readback; referral rewards art checks all printed 300/0.7/1 values on both views. Fixed monthly VIP salary preparation freezing at midnight before due15:00; due-time member cutoff regression passed. Original live salary source matched pre-edit, backup dbserver/data/backup_remix_v8_20261103_0557/vip_salary.php and exact upload readback verified. 81 frontend tests,11 PHP files/lint,18k-member60-day model/issues={} and preview build OK. Guest desktop/mobile no errors or horizontal overflow; isolated member signup succeeds. Full authenticated walk/admin writes NOT verified: mobile reward center overlays block navigation, desktop Close hidden on mobile. Remaining implementation: durable same-second financial ordering, salary-card stats, daily/new-member server resets; real-DB concurrency, hosting installation evidence, scoped admin UI identity and actual release APK/iOS files remain open. No blanket complete/production-ready assertion.
+[2026-11-03 06:20 UTC] admin_rewards.php daily-signin/new-member config reset (DELETE) uploaded; backup dbserver/data/backup_remix_v8_20261103_0620; exact readback match; guest GET/DELETE 401. 84 frontend + 11 PHP tests pass. Still open: authenticated admin reset browser proof, same-second financial ordering, salary-card stats, full mobile/desktop authenticated walk, APK/iOS.
+[2026-11-03 06:25 UTC] turnover_guard same-second fail-closed (credits >= boundary, bets > boundary, equal-time first deposit picks larger bonus) uploaded; backup backup_remix_v8_20261103_0625; readback match; 11 PHP tests pass. Full per-member financial sequence (migration) still open for exact ordering.
+
+[2026-11-03 06:45] Money integrity: unique claim keys + non-negative balance check live; 25-way concurrent bet test exact; admin salary-card stats live.
+
+- 2026-11-03 06:45 UTC: Re-ran 84 vitest, 11 PHP tests, 60-day sim (issues={}); desktop+mobile walk of 8 pages: no errors, no overflow. Open: per-member financial sequence migration, authenticated admin browser proof (master-key only), APK/iOS.
+[2026-11-03 07:18 UTC remix secrets] DBSERVER_URL + NEEXT_MASTER_KEY re-entered through secure form; master ping HTTP200 success/online v2.5.0, MySQL connected (MariaDB 10.4.32, neexthub_bengalbet, 39 tables), filesystem writable; db_query read authorized; member endpoints /api/promos,/api/referral/settings,/api/daily-signin/status,/api/auth/me all return expected 401 signed-out.
+
+[2026-11-03 07:25–07:42 UTC isolated fullcheck] Temporary member created normally; no-deposit bonus denied; deposit1000+stored470 approved once under12 parallel decisions;25-way round outcomes exactly match balance. Added per-member financial_clocks with3 transactional InnoDB ledger/bet triggers, migration20261103_financial_order.sql; ordinary PHP writers briefly paused through db.php, original restored exactly; source backups backup_order_* and exact readback. All cash sources receive shared order automatically; deposit order allocated on approval, withdrawal on withholding, rejected refund retains order/no new grant. turnover_guard and rebate use sequence with conservative unknown-history fallback (history not reconstructed). 40-way bet order unique; later ৳10 bet gives0.30 rebate once; eligible withdraw500 accepted,12 simultaneous rejections refund500 once/no new wagering. Protected temporary MySQL regression proves identical-second withdrawal→bonus50→bet50 and complete clock/ledger rollback; endpoint removed. Universal old-password123456 exception removed via password_policy; live rejection and unchanged original login verified, backup_auth_* readback. Header random-money refresh removed; authoritative walletRefresh tests.86 frontend/13 PHP files/18,000-member model/issues={} pass; latest buildOK.11 desktop+12 mobile authenticated member sections visited, screenshots/no pageerrors/overflow; temporary account and all direct linked rows removed. Salary report master API read and guest401 pass. Remaining: scoped admin browser auth/save/reset matrix, exhaustive offer boundaries/cross-member concurrency, stale hosting scheduler installation evidence, signed APK/iOS releases. No full bug-free/production-ready claim.
+
+[2026-11-03 08:00–08:09 UTC isolated continuation] Scoped admin daily configuration no longer discarded when member-history read403; browser1280/390 daily day1=4.50 save→member authenticated API same→reset3.50; promotion list save/reset verifies fresh absent config instead of false success. Screenshots,no overflow/page errors; original settings restored/member cleanup/session revoke401 verified. Four friends80 parallel+20 mixed rounds/4 approvals produce exact parent2389.60/bonus ledger1389.60,instant300 each once; all5 accounts deleted. Live legacy game payout409 and live referral_bind cycle guard verified; missing referral_bind/admin_reward_controls mirrors restored without remote changes. Isolated live scheduler harness (member-only/no shared job preparation)8 calls commits one/seven busy,state/clocks restored. Isolated weekly20/monthly50 jobs issue cards without cash;foreign redeem400;10 concurrent claims each pays once,balance570/ledger70;all jobs/cards/members/runners removed.87 frontend,14 PHP files,18k-member model/issues={} pass,buildOK. Actual Windows/XAMPP host scheduler stale since11:33 Dhaka: filesystem/SQL authority does not install Windows scheduled task; hosting task-manager access needed. Signed APK/iOS files/distribution absent. Broader every-admin/reward/time-boundary/backup-restore matrix remains engineering verification, not falsely labelled external or complete.
+
+[2026-11-03 08:17–08:22 UTC panel continuation] Scoped desktop deposit46% and app53 browser saves/readback pass; signed-in member top app bar53 rendered before automatic egg overlay interrupted next click. Cleanup/restore/session revoke completed. Then external DBServer admin/public/master ping502/Cloudflare530; further real member claim/mobile/chance/mystery/day2–12 matrix blocked, not passed. Fixed member top bar hardcoded52/unsupported native-install promise with live rule/no fabricated unavailable amount;1280/390 unavailable screenshots,no pageerrors. Fixed mystery configuration discarded on scoped card-history denial and busy/failure state; canonical server turnover reread; chance weight max1000000 matches server; task bonus/required amounts normalized2decimals before write/readback.89 frontend/14 PHP test files pass,buildOK. Audit suggestion to split otherBonusTurnover rejected: intentional one common base is documented rule, not bug. Whole-panel mutation/boundary/artwork/backup-restore remains open; external server recovery needed before live retry.
+
+[2026-11-03 08:22–08:25 recovery/live retry] External host recovered. Full1280/390 scoped admin deposit46% and app53 saves/readback→authenticated member top and actual app dialog53; no-deposit actual claim denied/wallet0. API deposit500 stores230 bonus; approval wallet730; actual member app claim button credits53 once/readback783, screenshots. Original config restored and all temporary members/session cleaned/revoked. Automatic egg→reward center overlay exited through desktop Close/mobile ফিরে যান (test selectors corrected; no app navigation defect). Remaining chance/mystery/day2–12/whole mutation/artwork/boundary/backup restore work not blocked by server now, not done. Deposit form was not submitted in browser; actual app settlement was.
+
+[2026-11-03 09:11 UTC remix secrets] DBSERVER_URL and NEEXT_MASTER_KEY re-entered through the secure update form. Master ping HTTP200 success/online v2.5.0, MySQL connected (MariaDB 10.4.32, neexthub_bengalbet, 41 tables), filesystem reported; member endpoints /api/promos, /api/referral/settings, /api/daily-signin/status, /api/auth/me all return expected 401 signed-out. No site code, browser storage or chat carries either value.
+
+[2026-11-03 09:45 UTC] Live sweep: member pages/games/categories + 13 admin tabs open without crashes or 5xx; scoped session 403s by design; 4 test members deleted, session revoked; no code change. bdt222.me 10/12 promotions read and compared in v9 plan sec35 (data/MARKETING_PLAN_v9.txt); key gaps: rebate tiers 0.3-3%, first-deposit fixed tiers 20x, loss rescue table 10pm, VIP 34 tiers, iPhone 300 deposit. Not applied pending owner approval.
+
+[2026-11-03 10:15 UTC] bdt222 rules live: rebate lifetime-bet tiers, slot daily cumulative tiers cap17777, first-deposit fixed tiers + depositBonusTurnover19 (20x), wheel min300, rescue tiers replaced (old active 10/11/12 set inactive). Files promo_rules/turnover_offers/deposit_offer_rules uploaded w/ backup backup_v9_bdt222_20261103_1010, configs readback equal; old configs saved locally only in /tmp. Offer cards 18,888/88,888/iPhone17 text updated. 95 tests pass. sim_60days reports vip-level-above-plan (untouched VIP area) open. bdt222 site blank in sandbox Playwright; UI clone blocked.
