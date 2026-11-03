@@ -501,7 +501,7 @@ export const DepositMobileView: React.FC<DepositMobileViewProps> = ({
 
           {/* Quick Preset Buttons (5 top, 3 bottom) */}
           <div className="grid grid-cols-5 gap-2 pt-1">
-            {PRESET_AMOUNTS.map((amt) => {
+            {PRESET_AMOUNTS.filter((amt) => amt >= depositLimits.min && amt <= depositLimits.max).map((amt) => {
               const isSelected = activeAmount === amt;
               const bonusAmt = previewBonus(amt);
               return (
