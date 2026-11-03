@@ -460,6 +460,21 @@ export const MissionsModal: React.FC<MissionsModalProps> = ({
                 </span>
               )}
             </button>
+
+            {/* 11. ম্যানুয়াল রিবেট */}
+            <button
+              id="personal-center-tab-rebate"
+              ref={activeSidebarMenu === 'rebate' ? activeTabRef : null}
+              onClick={() => setActiveSidebarMenu('rebate')}
+              className={`px-3 md:px-4 py-2 md:py-2.5 flex items-center gap-2 md:gap-3 text-xs sm:text-sm font-semibold rounded-lg md:rounded-none transition-all shrink-0 cursor-pointer ${
+                activeSidebarMenu === 'rebate'
+                  ? 'bg-[#104e38] text-white font-bold shadow-inner border border-emerald-400/40 md:border-transparent ring-1 ring-emerald-400/20 md:ring-0'
+                  : 'text-gray-300 hover:bg-[#093527] hover:text-white'
+              }`}
+            >
+              <PieChart className={`w-4 h-4 ${activeSidebarMenu === 'rebate' ? 'text-emerald-300' : 'text-gray-300'}`} />
+              <span>ম্যানুয়াল রিবেট</span>
+            </button>
           </div>
         </aside>
 
