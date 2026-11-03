@@ -8,6 +8,15 @@ require_once __DIR__ . '/password_policy.php';
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../db.php';
 require_once __DIR__ . '/reward_grants.php';
+if (!function_exists('bbUniqueReferralCode')) {
+    function bbUniqueReferralCode(): string {
+        for ($i = 0; $i < 20; $i++) {
+            $code = 'BDT' . strtoupper(bin2hex(random_bytes(3)));
+            if (!Database::fetchOne('SELECT id FROM `users` WHERE `referral_code` = ? LIMIT 1', [$code])) return $code;
+        }
+        throw new RuntimeException('Could not allocate referral code');
+    }
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_GET['action'] ?? '';
@@ -43,7 +52,6 @@ switch ($path) {
 
         $token = Database::makeToken($user['id']);
         if (bbDailyLoginEgg($user['id'])) $user = Database::fetchOne("SELECT * FROM `users` WHERE `id` = ?", [$user['id']]);
-        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;
@@ -77,7 +85,7 @@ switch ($path) {
         $newUserId = 'usr-' . substr(md5(uniqid($phone, true)), 0, 10);
         $username = 'Player_' . substr($phone, -4);
         $hash = password_hash($password, PASSWORD_BCRYPT);
-        $myReferralCode = 'BDT' . strtoupper(substr(uniqid(), -4));
+        $myReferralCode = bbUniqueReferralCode();
 
         $userData = [
             'id' => $newUserId,
@@ -142,7 +150,6 @@ switch ($path) {
             Database::errorResponse('User not found', 404);
         }
 
-        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;
@@ -168,7 +175,6 @@ switch ($path) {
         }
 
         $user = Database::fetchOne("SELECT * FROM `users` WHERE `id` = ?", [$userId]);
-        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;
@@ -238,7 +244,7 @@ switch ($path) {
                 'red_packets_available' => 0,
                 'golden_eggs_available' => 2,
                 'unread_notifications' => 1,
-                'referral_code' => 'BDT' . strtoupper(substr(uniqid(), -4)),
+                'referral_code' => bbUniqueReferralCode(),
                 'total_earnings' => 0.00,
                 'referred_friends_count' => 0,
                 'avatar' => $avatar,
@@ -248,7 +254,6 @@ switch ($path) {
             Database::insert('users', $user);
         }
 
-        $user['free_spins']=bbWheelAvailable((string)$user['id'],(int)$user['free_spins']);
         unset($user['password_hash'], $user['transaction_password']);
         $user['has_lifetime_deposit'] = bbHasLifetimeDeposit((string)$user['id']);
         $user['isLoggedIn'] = true;
