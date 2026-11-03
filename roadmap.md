@@ -1,5 +1,10 @@
 # Remaining work
 
+## 2026-11-03 referral, app and login-egg continuation
+- [ ] Update the stale referral test to 49 tiers and run regressions.
+- [ ] Verify isolated members below/at eligibility thresholds and duplicate claims on the live server; remove test records.
+- [ ] Update TASKLIST.txt and CONTEXT.txt with observed results and remaining limitations.
+
 ## 2026-11-03 08:17 panel-to-member verification
 - [x] Server recovered08:22; scoped desktop/mobile deposit46% and app53 saves/readback; actual member top/dialog53, no-deposit claim denied, deposit500 stores230 bonus, approval730 then actual app claim53 gives783. Screenshots,settings restored/members deleted/session revoked. Deposit submission itself exercised via API, not its member form.
 - [x] Fixed top app bar hardcoded52 and unsupported install promise; server unavailable shows no fabricated amount on1280/390. Fixed mystery permitted config discarded by denied card reads, missing save busy/failure state; chance weight cap and task2-decimal readback normalized.89 frontend/14 PHP files pass;buildOK.
