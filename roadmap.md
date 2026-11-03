@@ -1,9 +1,10 @@
 # Remaining work
 
 ## 2026-11-03 referral, app and login-egg continuation
-- [ ] Update the stale referral test to 49 tiers and run regressions.
-- [ ] Verify isolated members below/at eligibility thresholds and duplicate claims on the live server; remove test records.
-- [ ] Update TASKLIST.txt and CONTEXT.txt with observed results and remaining limitations.
+- [x] Update the stale referral test to 49 tiers and run regressions (96 frontend tests).
+- [x] Verify isolated members below/at eligibility thresholds and duplicate claims on the live server; remove test records (fixtures, not full game/deposit UI).
+- [x] Update TASKLIST.txt and CONTEXT.txt with observed results and remaining limitations.
+- [ ] Separate follow-up: stale daily-VIP PHP expectations and old 60-day model do not validate the new rules; outside this request.
 
 ## 2026-11-03 08:17 panel-to-member verification
 - [x] Server recovered08:22; scoped desktop/mobile deposit46% and app53 saves/readback; actual member top/dialog53, no-deposit claim denied, deposit500 stores230 bonus, approval730 then actual app claim53 gives783. Screenshots,settings restored/members deleted/session revoked. Deposit submission itself exercised via API, not its member form.
