@@ -1,5 +1,11 @@
 # Remaining work
 
+## 2026-11-03 complete bdt222 alignment audit
+- [ ] Compare all saved promotion rules, pages, popups and member workflows with current source and live settings.
+- [ ] Verify guest/member desktop/mobile navigation and core flows using isolated members; clean up test data.
+- [ ] Correct unambiguous mismatches within the requested scope; gather unclear financial/workflow decisions together.
+- [ ] Record a truthful match/gap matrix and remaining decisions; do not claim exhaustive 1:1 without evidence.
+
 ## 2026-11-03 live daily VIP verification
 - [x] Verify exact live salary source and VIP1 daily amount; isolated no-deposit/approved-deposit issuance, no cash on issuance, member UI redemption, repeat denial and ledger readback; clean all test data and temporary runner.
 - [ ] Previous-day VIP level is not snapshotted: current processing-time level determines card amount. Separate rule correction needed; automatic hosting cron remains unverified.
