@@ -126,3 +126,6 @@ BENGALBET কাজের তালিকা — প্রতিটি কাজ
 
 - [x] 2026-11-03 লাইভ দৈনিক VIP যাচাই: VIP1 ৳১, জমাহীন সদস্যে কার্ড নেই, অনুমোদিত জমার পর বিচ্ছিন্ন salary engine-এ আগের তারিখের কার্ড একবার, কার্ড তৈরিতে টাকা নয়, সদস্যের নগদ গ্রহণ বোতামে ৳১, পুনরায় দাবি প্রত্যাখ্যান ও এক bonus ledger নিশ্চিত। পরীক্ষার সদস্য/কার্ড/কাজ/লেনদেন/অস্থায়ী authenticated runner মুছে যাচাই। সাধারণ cron চালানো হয়নি, অন্য সদস্যের কাজ স্পর্শ করা হয়নি।
 - [ ] লাইভ দৈনিক বেতন অমিল: আগের দিনের তারিখ আছে, কিন্তু আগের দিনের সদস্য VIP লেভেল snapshot নেই; কার্ড তৈরি হওয়ার সময়কার users.vip_level দিয়ে অঙ্ক নির্ধারিত। আলাদা সংশোধন দরকার; স্বয়ংক্রিয় cron চালু হওয়ার প্রমাণ নয়।
+
+- [x] 2026-11-03 complete-alignment audit-এর প্রথম ধাপ: docs/bdt222/ALIGNMENT_AUDIT_BN.md-এ source/live/browser মিল-ঘাটতি; মোবাইল VIP daily salary amount/rule যোগ ও390×844 browser verified, desktop1920×1080 member menu verified,96 tests pass; isolated audit member removed।
+- [ ] Total1:1 বাকি: min deposit200 vs100, red12rounds vs4, rescue22:00/24h vs10:00, memberday12:00 absent, mystery30day/wheelEOD expiry absent, prior-dayVIP history, prize/app-only/notification policy; একত্রিত সিদ্ধান্ত ও পরের implementation দরকার।

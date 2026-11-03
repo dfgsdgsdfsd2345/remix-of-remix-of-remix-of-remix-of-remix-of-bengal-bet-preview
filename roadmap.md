@@ -1,10 +1,10 @@
 # Remaining work
 
 ## 2026-11-03 complete bdt222 alignment audit
-- [ ] Compare all saved promotion rules, pages, popups and member workflows with current source and live settings.
-- [ ] Verify guest/member desktop/mobile navigation and core flows using isolated members; clean up test data.
-- [ ] Correct unambiguous mismatches within the requested scope; gather unclear financial/workflow decisions together.
-- [ ] Record a truthful match/gap matrix and remaining decisions; do not claim exhaustive 1:1 without evidence.
+- [x] First-pass saved13rules/source/live-config comparison recorded in docs/bdt222/ALIGNMENT_AUDIT_BN.md.
+- [x] Guest/member1920desktop and390mobile baseline, desktop menu presence/mobileVIP verified; test member removed.
+- [x] Mobile dailyVIP benefit added;96tests pass; financial ambiguities gathered.
+- [ ] Apply owner decisions for remaining money/time/expiry rules, prior-dayVIP history, popup/app/prize policies; complete exhaustive UI/flow/artwork matrix and fresh60day model. Awaiting consolidated answers.
 
 ## 2026-11-03 live daily VIP verification
 - [x] Verify exact live salary source and VIP1 daily amount; isolated no-deposit/approved-deposit issuance, no cash on issuance, member UI redemption, repeat denial and ledger readback; clean all test data and temporary runner.
