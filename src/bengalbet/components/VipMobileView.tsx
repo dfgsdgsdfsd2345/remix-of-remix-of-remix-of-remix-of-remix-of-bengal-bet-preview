@@ -18,6 +18,7 @@ import {
 import { UserAccount, VipTierConfig, VipRewardRecord } from '../types';
 import { api } from '../services/api';
 import { useLiveRules, weekdayName, toBnDigits } from '../services/promoLive';
+import { Button } from '@/components/ui/button';
 
 interface VipMobileViewProps {
   user?: UserAccount;
@@ -458,6 +459,9 @@ export const VipMobileView: React.FC<VipMobileViewProps> = ({
 
             <div>
               <p>
+                <strong className="text-gray-800">দৈনিক বেতন:</strong> প্রতিদিন বাংলাদেশ সময় ভোর ০৫:০০-এ নগদ কার্ডের সময় শুরু হয়।
+              </p>
+              <p className="mt-1">
                 <strong className="text-gray-800">সাপ্তাহিক বোনাস:</strong> প্রতি {weekdayName(liveRules?.promoRules?.vip?.weeklyClaimDay)} নগদ কার্ড আসে; মাসিক কার্ড মাসের {toBnDigits(String(liveRules?.promoRules?.vip?.monthlyClaimDay ?? 1))} তারিখ {toBnDigits(String(liveRules?.promoRules?.vip?.monthlyHour ?? 15).padStart(2,'0'))}:০০-এ (বাংলাদেশ সময়)।
               </p>
               <p className="mt-1">
@@ -586,8 +590,24 @@ export const VipMobileView: React.FC<VipMobileViewProps> = ({
             </button>
           </div>
 
-          {/* 3 Interactive Cards for Salary & Rewards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          {/* Salary and upgrade benefits */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div className="rounded-lg border border-border bg-card p-3.5 text-card-foreground">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>দৈনিক বেতন</span>
+                <Clock className="h-4 w-4" />
+              </div>
+              <div className="mt-1 font-mono text-lg font-bold">
+                {currentTier.dailyBonus === undefined ? '—' : `৳${Number(currentTier.dailyBonus).toLocaleString()}`}
+              </div>
+              <div className="mt-3 flex items-center justify-between gap-2">
+                <span className="text-xs text-muted-foreground">০৫:০০ · বাংলাদেশ সময়</span>
+                <Button size="sm" variant="outline" disabled={userVipLevel < 1 || currentTier.dailyBonus === undefined} onClick={() => showToast('দৈনিক নগদ কার্ড পুরস্কার কেন্দ্রের টিকিট থেকে গ্রহণ করুন।')}>
+                  <Gift className="h-4 w-4" />
+                  নগদ কার্ড
+                </Button>
+              </div>
+            </div>
             {/* 1. Level Upgrade Bonus */}
             <div className="bg-white rounded-xl p-3.5 border border-gray-100 shadow-xs flex flex-col justify-between">
               <div>

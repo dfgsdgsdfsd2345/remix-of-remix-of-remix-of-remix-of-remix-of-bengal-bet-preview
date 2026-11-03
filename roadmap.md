@@ -1,5 +1,11 @@
 # Remaining work
 
+## 2026-11-03 complete bdt222 alignment audit
+- [x] First-pass saved13rules/source/live-config comparison recorded in docs/bdt222/ALIGNMENT_AUDIT_BN.md.
+- [x] Guest/member1920desktop and390mobile baseline, desktop menu presence/mobileVIP verified; test member removed.
+- [x] Mobile dailyVIP benefit added;96tests pass; financial ambiguities gathered.
+- [ ] Apply owner decisions for remaining money/time/expiry rules, prior-dayVIP history, popup/app/prize policies; complete exhaustive UI/flow/artwork matrix and fresh60day model. Awaiting consolidated answers.
+
 ## 2026-11-03 live daily VIP verification
 - [x] Verify exact live salary source and VIP1 daily amount; isolated no-deposit/approved-deposit issuance, no cash on issuance, member UI redemption, repeat denial and ledger readback; clean all test data and temporary runner.
 - [ ] Previous-day VIP level is not snapshotted: current processing-time level determines card amount. Separate rule correction needed; automatic hosting cron remains unverified.
