@@ -1,6 +1,7 @@
 # Remaining work
 
 ## 2026-11-03 full-site bdt222 implementation
+- [x] 20:48 Dhaka: mystery 30-day expiry, wheel end-of-day expiry and prior-day VIP salary uploaded (backup dbserver/backup/align_20261103, byte readback equal); 18 PHP test files pass; temp member smoke+cleanup.
 - [ ] Produce one section-by-section implementation and acceptance plan covering desktop/mobile, guest/member flows, admin controls, live PHP data and database changes.
 - [ ] Apply approved rule corrections with mirrored source, tests, backup and live readback.
 - [ ] Finish page, popup and artwork parity in the existing theme; remove invented member counts.
@@ -20,7 +21,7 @@
 
 ## 2026-11-03 live daily VIP verification
 - [x] Verify exact live salary source and VIP1 daily amount; isolated no-deposit/approved-deposit issuance, no cash on issuance, member UI redemption, repeat denial and ledger readback; clean all test data and temporary runner.
-- [ ] Previous-day VIP level is not snapshotted: current processing-time level determines card amount. Separate rule correction needed; automatic hosting cron remains unverified.
+- [x] 20:48 Dhaka: VIP level history (triggers + current-state baseline, 208 members) live; salary uses prior-day level from history. Hosting cron still unverified.
 
 ## 2026-11-03 referral, app and login-egg continuation
 - [x] Update the stale referral test to 49 tiers and run regressions (96 frontend tests).
